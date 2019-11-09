@@ -14,7 +14,7 @@
         specStatus: "CG-DRAFT",
         editors: [{
           name: "Nishant Shukla",
-          url: "http://shukla.io",
+          url: "https://shukla.io",
           w3cid: 112944
         }],
         authors: [
@@ -37,6 +37,8 @@
         }
       };
     </script>
+    <script src="main.js"></script>
+    <script src="dm.js"></script>
   </head>
   <body>
     <section id='abstract'>
@@ -78,6 +80,29 @@
       </section>
       <section>
         <h3>Forks</h3>
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 50%">
+              <pre id="run-input-1" class="example">
+                fork {
+                  _ {
+                    act "Let's talk about animals."
+                  }
+                  _ {
+                    act "Let's talk about colors."
+                  }
+                }
+              </pre>
+            </td>
+            <td style='width: 50%; vertical-align: top; margin-top:10px; padding-left: 20px;'>
+              <button onclick="return runClicked();">Run</button>
+              <pre id="run-output-1" style="height: 100px; background: papayawhip">
+                test
+              </pre>
+            </td>
+          </tr>
+        </table>
+        
       </section>
       <section>
         <h3>Loops</h3>
@@ -110,4 +135,5 @@
     </section>
     
   </body>
+  
 </html>
