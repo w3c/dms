@@ -8,7 +8,6 @@ const ERROR_PREFIX_LENGTH = ERROR_PREFIX.length;
 var Module = {
   onRuntimeInitialized: function() {},
   print: function(text) {
-    // console.log(text);
     if (text.substr(0, PLANNER_LOG_TAG_LENGTH) === PLANNER_LOG_TAG) {
       const msg = text.substr(PLANNER_LOG_TAG_LENGTH+1);
       if (msg.substr(0, ERROR_PREFIX_LENGTH) === ERROR_PREFIX && !debug_mode_) {
@@ -47,7 +46,6 @@ self.onmessage = msg => {
       start_dm(msg_data.dependencies, msg_data.debug_mode);
       break;
     case 'handle-event':
-        // console.log("handling event");
         handleEvent(msg_data.input, msg_data.slots);
       break;
     default:

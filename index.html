@@ -39,6 +39,7 @@
     </script>
     <script src="main.js"></script>
     <script src="dm.js"></script>
+    <script src="dms-compiler.js"></script>
   </head>
   <body>
     <section id='abstract'>
@@ -77,31 +78,38 @@
       </section>
       <section>
         <h3>if</h3>
+        <div>
+          <pre class="example">
+            if 2 + 2 == 4 {
+              act "we're good"
+            } else {
+              act "something is very wrong"
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
       </section>
       <section>
         <h3>Forks</h3>
-        <table style="width: 100%">
-          <tr>
-            <td style="width: 50%">
-              <pre id="run-input-1" class="example">
-                fork {
-                  _ {
-                    act "Let's talk about animals."
-                  }
-                  _ {
-                    act "Let's talk about colors."
-                  }
-                }
-              </pre>
-            </td>
-            <td style='width: 50%; vertical-align: top; margin-top:10px; padding-left: 20px;'>
-              <button onclick="return runClicked();">Run</button>
-              <pre id="run-output-1" style="height: 100px; background: papayawhip">
-                test
-              </pre>
-            </td>
-          </tr>
-        </table>
+        <div>
+          <pre class="example">
+            fork {
+              _ {
+                act "Let's talk about animals."
+              }
+              _ {
+                act "Let's talk about colors."
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
         
       </section>
       <section>
