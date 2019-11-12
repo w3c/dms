@@ -44,7 +44,10 @@
   <body>
     <section id='abstract'>
       <p>
-        This is required.
+        This is the first version of the Dialogue Manager Script (DMS) documentation,
+        which will demonstrate the current state and capabilities of DMS 
+        through a <a>tutorial</a>, outline the <a>Syntax and Semantics</a>,
+        and discuss how to write <a>effective DMS</a>. 
       </p>
     </section>
     <section id='sotd'>
@@ -54,36 +57,81 @@
     </section>
     <section>
       <h2>Getting Started</h2>
+      <p>
+        The code snippets presented in this page can be evaluated by running the "Run" button,
+        which compiles the DM Script into DMPL JSON, and then runs the JSON on a JavaScript runtime.
+        Follow along closely!
+      </p>
     </section>
+
     <section>
-      <h2>Tutorial: Guessing Game</h2>
+      <h2><dfn>Tutorial</dfn>: Guessing Game</h2>
     </section>
+
     <section>
-      <h2>Syntax and Semantics</h2>
+      <h2><dfn>Syntax and Semantics</dfn></h2>
+      <p>
+        This chapter covers concepts common to most programming languages 
+        and how they work in DMS. 
+      </p>
 
       <section>
-        <h3>Variable Bindings</h3>
-      </section>
-      <section>
-        <h3>Functions</h3>
-      </section>
-      <section>
-        <h3>Primitive Types</h3>
-      </section>
-      <section>
         <h3>Comments</h3>
+        <p>
+          Programmers may leave notes, or comments, in their code. 
+          These comments are ignored by the compiler, 
+          but are useful for other programmers reading the code.
+        </p>
+        <pre class="example">
+          // Write your comments here.
+        </pre>
       </section>
+
       <section>
-        <h3>Actions</h3>
-      </section>
-      <section>
-        <h3>if</h3>
+        <h3>Variables</h3>
+        <p>
+          In programming, a variable is nothing more than a placeholder for some value. 
+          The strings <code>“Chai”</code>, and <code>“Moo”</code> are simply values that a 
+          placeholder <code>dog_name</code> could take on, 
+          as can be seen in the following example.
+        </p>
         <div>
           <pre class="example">
-            if 2 + 2 == 4 {
-              act "we're good"
-            } else {
-              act "something is very wrong"
+            // Initial value for a dog name.
+            dog_name = "Chai"
+  
+            // Later on dog_name can be changed to a different value if needed.
+            dog_name = "Moo"
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          Note that in DMS, there is always an implicit infinite loop wrapping our code. 
+          During execution it will keep creating and assigning a variable 
+          named <code>dog_name</code> the values <code>"Chai”</code> and <code>"Moo”</code>. 
+        </p>
+      </section>
+
+      <section>
+        <h3>Control Flow</h3>
+        <p>
+          In order to remove these redundant variable creation and assignments 
+          we can wrap code that will only be executed a single time in a block 
+          beginning with the keyword once. 
+          The once keyword tells the compiler that the variable creation and 
+          assignments should only be executed one time over the lifetime of the component.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              // Initial value for a dog name.
+              dog_name = "Chai"
+
+              // Later on dog_name can be changed to a different value if needed.
+              dog_name = "Moo"
             }
           </pre>
           <blockquote>
@@ -91,7 +139,313 @@
             <pre></pre>
           </blockquote>
         </div>
+        <p>
+          Deciding whether or not to run some code depending on if a condition is true 
+          is a basic building block in most programming languages. 
+          The most common construct thats allows programmers to control the flow of execution 
+          of DMS code are if statements.
+          Recall that in DMS there is always an implicit infinite loop wrapping our code, 
+          meaning that loops are inherently built in, 
+          and any code outside of a once block will be repeatedly executed over the lifetime of our program. 
+        </p>
+        <section>
+          <h3>If Statements</h3>
+          <p>
+            An if statement allows you to branch your code depending on conditions. 
+            You provide a condition and then state, 
+            “If this condition is met, run this block of code. 
+            If the condition is not met, do not run this block of code.” 
+            All if expressions start with the keyword <code>if</code>, and followed up by a condition that evaluates to boolean value. 
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                number = 5
+              }
+              
+              if number > 4 {
+                act "Number is greater than 4."
+              }
+              else {
+                act "Number is less than 4."
+              }
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+          <p>
+            You can have multiple conditions by combining <code>if</code> and <code>else</code> in an <code>else if</code> block. For example:
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                number = 7
+              }
+              
+              if number % 3 == 0 {
+                act "Number is divisible by 3."
+              }
+              else if number % 2 == 0 {
+                act "Number is divisible by 2."
+              }
+              else {
+                act "Number is not divisible by 2 or 3."
+              }
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+        </section>
       </section>
+
+      <section>
+          <h3>Primitive Types</h3>
+          <p>
+            In the previous example we only allowed the variable <code>dog_name</code> 
+            to take on string values. 
+            However, DMS is a dynamically typed language meaning that variables can 
+            take on any basic data type such as string, float, and Boolean.
+            Consider the following example where we have a variable named 
+            <code>current_thought</code> which denotes what a programmer might be 
+            thinking about throughout the day.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                // Early in the morning their first thought could potentially be
+                current_thought = "coffee"
+                
+                // Next they could be thinking, do I want office coffee?
+                current_thought = false
+                
+                // Note that we don't use double quotes when assigning a boolean value to a variable.
+                
+                // And so they decide to buy coffee elsewhere, which has an associated cost.
+                current_thought = 5.20
+              }
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+
+          Every value in DMS has a data type which tells DMS what kind of data is being specified 
+          so it knows how to work with the data. 
+          Recall that DMS is dynamically typed meaning that it doesn’t need to know the 
+          types of all variables at compile time. 
+        </section>
+
+      <section>
+        <h3>Functions</h3>
+        <p>
+          Custom function definitions in DMS start with the keyword <code>def</code> and have a set of parentheses after the function name. 
+          The curly braces tell the compiler where the function body begins and ends. 
+          Consider the following function which simply returns the string, <code>"Greetings!"</code>.
+        </p>
+        <pre class="example">
+          def greet() {
+            pop "Greetings!"
+          }
+        </pre>
+        <p>
+          Our declaration of the greet function begins with the keyword <code>def</code>, 
+          is followed by the function name <code>greet</code>, and ends with a set of empty parentheses <code>()</code>. 
+          The function body contains all the logic that is expected to be executed when calling the function. 
+          In the above example, we simply return the string <code>"Greetings!"</code> using the keyword pop. 
+          In order to call our function and print the corresponding greeting, we use the keyword act. 
+        </p>
+        <div>
+          <pre class="example">
+            once {
+
+              def greet() {
+                pop "Greetings!"
+              }
+
+              act greet()
+
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          Functions in DMS can also be defined to have parameters, 
+          which are special variables that are part of the function declaration. 
+          The following re-declaration of the greet function allows programmers to pass in a variable of their choice, 
+          lets say the name of a user for example.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              programmer = "Naitian"
+              def greet(user) {
+                pop "Greetings " + user
+              }
+            }
+            act greet(programmer)
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+
+        <section>
+          <h3>Built-in Functions</h3>
+          <h4>len</h4>
+          <p>
+            The len function returns the length of the given argument. 
+            Possible argument types include:  string, list, or dictionary.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                student_names = ["Jeremy", "Earle", "Chad"]
+                act len(student_names)
+              }
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+
+          <h4>pick</h4>
+          <p>
+            The pick function allows programmers to pseudo-randomly select an item within a list.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                athlete_rankings = [
+                  {
+                    lonzo: 2
+                  },
+                  {
+                    zion: 1
+                  }
+                ]
+              }
+              
+              act pick(athlete_rankings)
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+
+          <h4>get</h4>
+          <p>
+            The get function allows users to select a specific element of a list. 
+            In the above example if we wanted to retrieve the last element we could do so as follows.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                athlete_rankings = [
+                  {
+                    lonzo: 2
+                  },
+                  {
+                    zion: 1
+                  }
+                ]
+              }
+              
+              act get(len(athlete_rankings) - 1, athlete_rankings)
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+
+          <h4>exists</h4>
+          <p>
+            The exists function allows programmers to check whether the given variable has been defined or not.
+          </p>
+          <div>
+            <pre class="example">
+              // If the variable `count` has been defined we increment the value by one,
+              // otherwise we gives it an initial value.
+              if exists("count") {
+                count = count + 1
+              }
+              else {
+                act "Initializing count to 0"
+                count = 0
+              }
+              act count
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+          <p>
+            Note that because we don’t define the variable count anywhere, 
+            our program defaults to the else branch of the conditional statement, 
+            and you should see the following output.
+          </p>
+        </section>
+      </section>
+
+      <section>
+        <h3>Input Handling</h3>
+        <p>
+          Up to now all program behavior has been predefined. 
+          Variables have been assigned persistent values, and all output can be predetermined ahead of time. 
+          However part of what makes any program engaging and meaningful, 
+          is when a user or programmer is able to directly interact with the application. 
+          In this section we showcase how DMS captures and processes user input.
+
+          In DMS user input is handled by a special structure which assigns intents 
+          to a temporary user-defined variable, as follows.
+        </p>
+        <pre class="example">
+          once {
+            act "Hi there! I'm Parrot-Bot. I repeat anything you say!"
+          }
+          input -> result {
+            result == "Hello" {
+              act "Ahoj to you!"
+            }
+            _ {
+              act result
+            }
+          }
+        </pre>
+        <p>
+          In order to begin capturing input, we use the expression <code>input -></code>. 
+          The expression can be thought of as follows, 
+          “Anything that is typed in or captured, 
+          redirect and store in the variable immediately following the arrow -> “. 
+          In the example above, all captured input is stored in the variable result. 
+          Once DMS is done capturing input, the body of the input block begins its execution. 
+          Simply put, the conditions contained within the body of the input block can be thought 
+          of as if-else expression. 
+          This means that the first expression, using the input, that evaluates to true will be executed. 
+          In the above example, whenever user input happens to be "Hello" the program will output "Ahoj to you!", 
+          (Note: Ahoj is Czech for Hello) and in all other cases will default to the expression beginning with the underscore _. 
+
+          Note that within an input block whenever an underscore _ is used as the condition of an expression, 
+          it will always evaluate to true; essentially acting as the default else of a branching statement.
+        </p>
+      </section>
+      
+      <section>
+        <h3>Actions</h3>
+      </section>
+
       <section>
         <h3>Forks</h3>
         <div>
@@ -110,36 +464,242 @@
             <pre></pre>
           </blockquote>
         </div>
-        
       </section>
+
       <section>
         <h3>Loops</h3>
       </section>
+
       <section>
-        <h3>Lists</h3>
+        <h3>Structures</h3>
+        <p>
+          The data types defined in the previous section are all atomic literals. 
+          DMS also allows programmers to build more complex structures such as lists, or dictionaries.
+        </p>
+        <section>
+          <h3>List</h3>
+          <p>
+            A list can is an ordered arrangement of other structures. 
+            All elements are enclosed within brackets, and separated by commas as follows.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                // list of integers
+                student_grades = [87, 90, 88, 92, 93]
+                
+                // list of strings
+                student_names = ["Nawar", "Tom", "Chris"]
+                
+                // list of arbitrary types
+                a_bunch_of_stuff = [false, 1, "two", [3, 4, 5]]
+              }
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+        </section>
+
+        <section>
+          <h3>Dictionary</h3>
+          <p>
+            A dictionary is a structure that maps data in key-value pairs. 
+            The value of a corresponding key can be any structure.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                student_grades = {
+                  Nishant: 0,
+                  Carol: 93,
+                  Daniel: 90
+                } 
+              }
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+          <p>
+            Take note on the syntax that was used to create the dictionary 
+            in the above code snippet. 
+            The keys of the dictionary are symbols which are a finite sequence 
+            of characters without the double quotation marks, 
+            and the values in this example are simply integer values. 
+            Note that when accessing the values of a dictionary, 
+            the keys must be enclosed within double quotation marks.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                student_grades = {
+                  Nishant: 0,
+                  Carol: 93,
+                  Daniel: 90
+                } 
+              }
+              act student_grades["Nishant"]
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+        </section>
       </section>
+
       <section>
-        <h3>Dictionaries</h3>
+        <h3>Running components</h3>
+        <p>
+          Most programming languages allow programmers to use external packages/libraries and 
+          launch child processes from anywhere within the main process. 
+          In this chapter we demonstrate how programmers are able to import and run components 
+          which can be thought of as scripts from within the main DMS program. 
+          Being able to import and launch components allows for programmers to develop modular and sophisticated DMS programs. 
+        </p>
+        <section>
+          <h3><dfn>use</dfn> statement</h3>
+          <p>
+              The <code>use</code> statement allows programmers to import variables and user defined 
+              functions from an external component or script. 
+              Consider the following example where we have a component containing a number of math functions, 
+              and a main component wanting to use all the predefined math functions.
+              Create the following two files: main.dms and math.dms. 
+              Inside math.dms place the following code segment.
+          </p>
+          <pre class="example">
+            once {
+              pi = 3.14
+              def square(number) {
+                  pop number * number
+              }
+              
+              def increment(number) {
+                  pop number + 1
+              }
+            }
+          </pre>
+          <p>
+            Now suppose that we wanted to use both the offset and square functions. 
+            Inside the main.dms file we could do so as follows
+          </p>
+          <pre class="example">
+            once {
+              use "math" import _
+            }
+            
+            act square(2)
+            act increment(3)
+            act pi
+          </pre>
+          <p>
+            In order to introduce the component we begin with the keyword use, 
+            followed by the component name, in this case math. 
+            Note that we leave off the file extension. 
+            
+            Next in order to bring all predefined functions into scope within main.dms we use the keyword import _. 
+            This can essentially be thought of as bringing everything that was defined within main.dms into scope and actually usable. 
+            The manner in which components are introduced might be a little tough to understand. 
+            
+            At a high level the use of components can be thought of as follows. 
+            Suppose you’re making curry. You have recipe, which calls for spices. 
+            Naturally you ask yourself, which ones? To which your recipe might say, all of them. 
+            And so you proceed to bring all the individual ingredients defined in spices 
+            and use them within your curry recipe.
+          </p>
+        </section>
+        <section>
+          <h3><dfn>run</dfn> statement</h3>
+          <p>
+            In the last section we introduced the idea of a component or simply a script. 
+            Components not only make a programmers life easier by allowing DMS code to be modular, 
+            but also save developers from writing their entire code base within a component. 
+            DMS allows programmers to launch sub-components from within a main-component. 
+            At a high level this means that if our current task is to make dinner, 
+            completing the sub-task of washing dishes gives us the clean dishes we need to finish our main task. 
+            Consider the following DMS code which does exactly that.
+          </p>
+          <div>
+            <pre class="example">
+              once {
+                num_dishes = 20
+              }
+
+              if num_dishes > 2 {
+                  pop false
+              }
+              else {
+                  pop true
+              }
+            </pre>
+            <blockquote>
+              <button onclick="return runClicked(this);">Run</button>
+              <pre></pre>
+            </blockquote>
+          </div>
+          <p>
+            Similarly within main.dms place the following. 
+          </p>
+          <pre class="example">
+            once {
+              clean_dishes = false
+            }
+            act "Lets make some food!"
+            if !clean_dishes {
+              run "wash_dishes" () -> result {
+                result {
+                  act "Ok lets get to cooking!"
+                }
+                _ {
+                  act "On second thought, lets order in."
+                }
+              }
+            }
+          </pre>
+          <p>
+              There’s a lot going on in the above example, 
+              so lets break it down. In order to launch a sub-component we use the keyword run. 
+              The line containing run <code>"wash_dishes" () -> result</code> tells DMS that we want to pause our current component, 
+              run the sub-component, and wait for it to finish. 
+              Upon finishing, the wash_dishes sub-component returns a Boolean value denoting its success, 
+              which is stored in result. 
+              (Note that the returned value of the sub-component does not have to be a Boolean value, 
+              and can actually be any of the atomic or structure data types defined in the previous chapter.)  
+
+              The expressions that follow on lines 7-12 are again an example of conditional if-else expressions. 
+              The first expression that evaluates to true will be executed, and the others will be ignored. 
+              In this case because we happen to be returning a Boolean value, whenever result is true, 
+              the first expression will be executed, and our program defaults to the case beginning with an underscore _ as this evaluates to true. 
+              
+              The topics that we’ve covered in the past two chapter are common to most programming language. 
+              Beyond this point we begin to define the key ideas that make DMS special. 
+              We introduce the notion of what makes DMS a task-oriented programming language and illustrate 
+              how tasks can be broken down into actions that have a corresponding utility. 
+              With this notion of tasks, actions and utility we show how DMS allows programmers rid themselves of the 
+              overhead of having to think about the sequential-steps required to achieve a task and simply let DMS 
+              pick the best sequence of actions for you. Lets dive in!
+          </p>
+        </section>
       </section>
-      <section>
-        <h3>Custom Functions</h3>
-      </section>
-      <section>
-        <h3>Strings</h3>
-      </section>
+
       <section>
         <h3>Closures</h3>
       </section>
+
       <section>
         <h3>Imports</h3>
       </section>
+      
       <section>
         <h3>Casting between types</h3>
       </section>
     </section>
 
     <section>
-      <h2>Effective DMS</h2>
+      <h2><dfn>Effective DMS</dfn></h2>
     </section>
     
   </body>

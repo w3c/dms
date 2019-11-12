@@ -11,12 +11,10 @@ let deleteWorker = function() {
 }
 
 let runClicked = function(context) {
-    console.log(context);
-    
     if (worker !== null) {
         deleteWorker();
     }
-    worker = new Worker('./worker.js');
+    
     let inputArea = context.parentNode.parentNode.children[0];
     let dmsExample = inputArea.innerText.split('\n');
     dmsExample.shift();
@@ -24,13 +22,17 @@ let runClicked = function(context) {
     let outputArea = context.parentNode.children[1];
     outputArea.innerText = "";
     let dmpl = Compiler(dms);
+    worker = new Worker('./worker.js');
     worker.onmessage = function(msg) {
         let { data } = msg;
         switch(data.type) {
             case 'print':
                 let dataJson = JSON.parse(data.text);
-                if (dataJson['@act']) {
-                    outputArea.innerText += `${dataJson['@act']}\n`;
+                console.log(dataJson);
+                if (dataJson['@act'] !== undefined) {
+                    outputArea.innerText += `${JSON.stringify(dataJson['@act'])}\n`;
+                } else if (dataJson['@set'] !== undefined) {
+                    outputArea.innerText += `${dataJson['@set']} = ${JSON.stringify(dataJson['val'])}\n`;
                 }
                 
                 if (outputArea.innerText.split('\n').length > 6) {
@@ -47,7 +49,7 @@ let runClicked = function(context) {
         dependencies: {
             "__main__": dmpl
         },
-        debug_mode: false 
+        debug_mode: true 
     });
     return false;
 }
