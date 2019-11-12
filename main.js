@@ -19,6 +19,12 @@ let runClicked = function(context) {
     if (context.parentNode.children.length > 3) {
         intentInput = context.parentNode.children[2];
         let sendBtn = context.parentNode.children[3];
+        intentInput.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                sendBtn.click();
+            }
+        });
         intentInput.style.display = "";
         sendBtn.style.display = "";
         sendBtn.onclick = function() {
