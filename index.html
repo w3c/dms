@@ -66,6 +66,23 @@
 
     <section>
       <h2><dfn>Tutorial</dfn>: Guessing Game</h2>
+      <div>
+        <pre class="example">
+          act "Guess the number!"
+          act "Please input your guess."
+          input -> guess {
+              _ {
+                  act "You guessed " + guess
+              }
+          }
+        </pre>
+        <blockquote>
+          <button onclick="return runClicked(this);">Run</button>
+          <pre></pre>
+          <input style="display: none;" placeholder="type input here" />
+          <button style="display: none;" onclick="return handleIntent(this);">Send</button>
+        </blockquote>
+      </div>
     </section>
 
     <section>
