@@ -717,6 +717,94 @@
 
     <section>
       <h2><dfn>Effective DMS</dfn></h2>
+      <div>
+        <pre class="example">
+          once {
+            score = 0
+            EUROPE, FRANCE, ITALY, ROME, PARIS, VENICE = 
+                ["Europe", "France", "Italy", "Rome", "Paris", "Venice"]
+            COUNTRY_IN, NEXT_TO, CITY_IN, CAPITAL_OF = 
+                ["a country in", "next to", "a city in", "the capital of"]
+            preferences = [
+                [{score: 10}, {score: 0}]
+            ]
+            user_response = null
+          }
+          
+          if user_response == null {
+              answer = ""
+              relation, entity = [CAPITAL_OF, FRANCE]
+              act "What is the " + relation + " " + entity + ": " + 
+                  "Italy, Rome, Paris, or Venice?"
+              input -> response {
+                  _ {
+                      user_response = response
+                  }
+              }
+          }
+          else {
+              #{depth: 4, model: preferences}
+              fork {
+                  [relation, entity] == [COUNTRY_IN, EUROPE] {
+                      answer = ITALY
+                  }
+                  [relation, entity] == [NEXT_TO, FRANCE] {
+                      answer = ITALY
+                  }
+                  [relation, entity] == [COUNTRY_IN, EUROPE] {
+                      answer = FRANCE
+                  }
+                  [relation, entity] == [NEXT_TO, ITALY] {
+                      answer = FRANCE
+                  }
+                  [relation, entity] == [CAPITAL_OF, ITALY] {
+                      answer = ROME
+                  }
+                  [relation, entity] == [CITY_IN, ITALY] {
+                      answer = ROME
+                  }
+                  [relation, entity] == [CITY_IN, FRANCE] {
+                      answer = VENICE
+                  }
+                  [relation, entity] == [CAPITAL_OF, FRANCE] {
+                      answer = PARIS
+                  }
+                  [relation, entity] == [CITY_IN, FRANCE] {
+                      answer = PARIS
+                  }
+                  relation == CAPITAL_OF {
+                      relation = CITY_IN
+                  }
+                  relation == CITY_IN {
+                      relation = CAPITAL_OF
+                  }
+                  relation == CAPITAL_OF {
+                      relation = NEXT_TO
+                  }
+                  relation == NEXT_TO {
+                      relation = CAPITAL_OF
+                  }
+                  entity == FRANCE {
+                      entity = ITALY
+                  }
+                  entity == ITALY {
+                      entity = FRANCE
+                  }
+                  answer == user_response {
+                      user_response = null
+                      act answer + " is " + relation + " " + entity
+                      score = score + 1
+                  }
+              }
+          }
+        </pre>
+        <blockquote>
+          <button onclick="return runClicked(this, false);">Run</button>
+          <pre></pre>
+          <input style="display: none;" placeholder="type input here" />
+          <button style="display: none;" onclick="return handleIntent(this);">Send</button>
+        </blockquote>
+      </div>
     </section>
     
   </body>
