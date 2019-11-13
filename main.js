@@ -10,7 +10,10 @@ let deleteWorker = function() {
     worker = null;
 }
 
-let runClicked = function(context) {
+let runClicked = function(context, debug_mode) {
+    if (debug_mode === undefined) {
+        debug_mode = true;
+    }
     if (worker !== null) {
         deleteWorker();
     }
@@ -69,7 +72,7 @@ let runClicked = function(context) {
         dependencies: {
             "__main__": dmpl
         },
-        debug_mode: true 
+        debug_mode: debug_mode
     });
     return false;
 }
