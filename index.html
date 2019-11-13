@@ -27,6 +27,10 @@
             name: "Victor Zhang",
             url: "https://www.linkedin.com/in/victor-zhang-a8b303108",
 	          w3cid: 113469
+          },
+          {
+            name: "James Long",
+            url: "https://jlongster.com/"
           }
         ],
         shortName: "dms",
@@ -196,7 +200,7 @@
           and any code outside of a once block will be repeatedly executed over the lifetime of our program. 
         </p>
         <section>
-          <h3>If Statements</h3>
+          <h3><dfn>If Statements</dfn></h3>
           <p>
             An if statement allows you to branch your code depending on conditions. 
             You provide a condition and then state, 
@@ -250,42 +254,104 @@
       </section>
 
       <section>
-          <h3>Primitive Types</h3>
-          <p>
-            In the previous example we only allowed the variable <code>dog_name</code> 
-            to take on string values. 
-            However, DMS is a dynamically typed language meaning that variables can 
-            take on any basic data type such as string, float, and Boolean.
-            Consider the following example where we have a variable named 
-            <code>current_thought</code> which denotes what a programmer might be 
-            thinking about throughout the day.
-          </p>
-          <div>
-            <pre class="example">
-              once {
-                // Early in the morning their first thought could potentially be
-                current_thought = "coffee"
-                
-                // Next they could be thinking, do I want office coffee?
-                current_thought = false
-                
-                // Note that we don't use double quotes when assigning a boolean value to a variable.
-                
-                // And so they decide to buy coffee elsewhere, which has an associated cost.
-                current_thought = 5.20
+        <h3>Forks</h3>
+        <p>
+          Forks are generalized <a>if statements</a>. Consider the trivial example below of branching logic.
+        </p>
+        <div>
+          <pre class="example">
+            if true {
+              act "Let's talk about animals."
+            }
+            else {
+              act "Let's talk about colors."
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          A fork statement allows a more general way of representing branching behavior.
+          The example below shows the same logic and above.
+        </p>
+        <div>
+          <pre class="example">
+            fork {
+              _ {
+                act "Let's talk about animals."
               }
-            </pre>
-            <blockquote>
-              <button onclick="return runClicked(this);">Run</button>
-              <pre></pre>
-            </blockquote>
-          </div>
+              _ {
+                act "Let's talk about colors."
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          Forks allow powerful customization of the branching behavior.
+          In the example below, the fork picks a child-block at random.
+        </p>
+        <div>
+          <pre class="example">
+            #{depth: 0}
+            fork {
+              _ {
+                act "Let's talk about animals."
+              }
+              _ {
+                act "Let's talk about colors."
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+      </section>
 
-          Every value in DMS has a data type which tells DMS what kind of data is being specified 
-          so it knows how to work with the data. 
-          Recall that DMS is dynamically typed meaning that it doesn’t need to know the 
-          types of all variables at compile time. 
-        </section>
+      <section>
+        <h3>Primitive Types</h3>
+        <p>
+          In the previous example we only allowed the variable <code>dog_name</code> 
+          to take on string values. 
+          However, DMS is a dynamically typed language meaning that variables can 
+          take on any basic data type such as string, float, and Boolean.
+          Consider the following example where we have a variable named 
+          <code>current_thought</code> which denotes what a programmer might be 
+          thinking about throughout the day.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              // Early in the morning their first thought could potentially be
+              current_thought = "coffee"
+              
+              // Next they could be thinking, do I want office coffee?
+              current_thought = false
+              
+              // Note that we don't use double quotes when assigning a boolean value to a variable.
+              
+              // And so they decide to buy coffee elsewhere, which has an associated cost.
+              current_thought = 5.20
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+
+        Every value in DMS has a data type which tells DMS what kind of data is being specified 
+        so it knows how to work with the data. 
+        Recall that DMS is dynamically typed meaning that it doesn’t need to know the 
+        types of all variables at compile time. 
+      </section>
 
       <section>
         <h3>Functions</h3>
@@ -491,26 +557,6 @@
       
       <section>
         <h3>Actions</h3>
-      </section>
-
-      <section>
-        <h3>Forks</h3>
-        <div>
-          <pre class="example">
-            fork {
-              _ {
-                act "Let's talk about animals."
-              }
-              _ {
-                act "Let's talk about colors."
-              }
-            }
-          </pre>
-          <blockquote>
-            <button onclick="return runClicked(this);">Run</button>
-            <pre></pre>
-          </blockquote>
-        </div>
       </section>
 
       <section>
