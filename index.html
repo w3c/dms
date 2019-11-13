@@ -807,8 +807,8 @@
         <pre class="example">
           once {
             score = 0
-            EUROPE, FRANCE, ITALY, ROME, PARIS, VENICE = 
-                ["Europe", "France", "Italy", "Rome", "Paris", "Venice"]
+            EUROPE, FRANCE, ITALY, ROME, PARIS, LYON = 
+                ["Europe", "France", "Italy", "Rome", "Paris", "Lyon"]
             COUNTRY_IN, NEXT_TO, CITY_IN, CAPITAL_OF = 
                 ["a country in", "next to", "a city in", "the capital of"]
             preferences = [
@@ -821,7 +821,7 @@
               answer = ""
               relation, entity = [CAPITAL_OF, FRANCE]
               act "What is the " + relation + " " + entity + ": " + 
-                  "Italy, Rome, Paris, or Venice?"
+                  "Italy, Rome, Paris, or Lyon?"
               input -> response {
                   _ {
                       user_response = response
@@ -850,7 +850,7 @@
                       answer = ROME
                   }
                   [relation, entity] == [CITY_IN, FRANCE] {
-                      answer = VENICE
+                      answer = LYON
                   }
                   [relation, entity] == [CAPITAL_OF, FRANCE] {
                       answer = PARIS
