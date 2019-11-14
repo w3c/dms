@@ -51,7 +51,6 @@ let runClicked = function(context, debug_mode) {
         switch(data.type) {
             case 'print':
                 let dataJson = JSON.parse(data.text);
-                console.log(dataJson);
                 if (dataJson['@act'] !== undefined) {
                     outputArea.innerText += `${JSON.stringify(dataJson['@act'])}\n`;
                 } else if (dataJson['@set'] !== undefined) {
