@@ -1151,6 +1151,7 @@
                   }
                   relation == CAPITAL_OF {
                       relation = CITY_IN
+                      act "Not every city is the captial"
                   }
                   relation == CITY_IN {
                       relation = CAPITAL_OF
@@ -1163,9 +1164,11 @@
                   }
                   entity == FRANCE {
                       entity = ITALY
+                      act "I think you're thinking of a different country"
                   }
                   entity == ITALY {
                       entity = FRANCE
+                      act "I think you're thinking of a different country"
                   }
                   answer == user_response {
                       user_response = null
