@@ -188,12 +188,9 @@
         <div>
           <pre class="example">
             once {
-              // Initial value for a dog name.
               dog_name = "Chai"
-
-              // Later on dog_name can be changed to a different value if needed.
-              dog_name = "Moo"
             }
+            dog_name = "Moo"
           </pre>
           <blockquote>
             <button onclick="return runClicked(this);">Run</button>
@@ -221,15 +218,17 @@
           <div>
             <pre class="example">
               once {
-                number = 5
+                number = 1
               }
               
-              if number > 4 {
-                act "Number is greater than 4."
+              if number > 2 {
+                act "Number is greater than or equal to 2."
               }
               else {
-                act "Number is less than 4."
+                act "Number is less than 2."
               }
+
+              number = number + 1
             </pre>
             <blockquote>
               <button onclick="return runClicked(this);">Run</button>
@@ -433,8 +432,8 @@
                   Carol: 93,
                   Daniel: 90
                 } 
+                act student_grades["Nishant"]
               }
-              act student_grades["Nishant"]
             </pre>
             <blockquote>
               <button onclick="return runClicked(this);">Run</button>
@@ -466,13 +465,10 @@
         <div>
           <pre class="example">
             once {
-
               def greet() {
                 pop "Greetings!"
               }
-
               act greet()
-
             }
           </pre>
           <blockquote>
@@ -917,33 +913,42 @@
           In DMS user input is handled by a special structure which assigns intents 
           to a temporary user-defined variable, as follows.
         </p>
-        <pre class="example">
-          once {
-            act "Hi there! I'm Parrot-Bot. I repeat anything you say!"
-          }
-          input -> result {
-            result == "Hello" {
-              act "Ahoj to you!"
+        <div>
+          <pre class="example">
+            once {
+              act "Hi there! I'm Parrot-Bot. I repeat anything you say!"
             }
-            _ {
-              act result
+
+            input -> result {
+              result == "Hello" {
+                act "Ahoj to you!"
+              }
+              _ {
+                act result
+              }
             }
-          }
-        </pre>
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+            <input style="display: none;" placeholder="type input here" />
+            <button style="display: none;" onclick="return handleIntent(this);">Send</button>
+          </blockquote>
+        </div>
         <p>
-          In order to begin capturing input, we use the expression <code>input -></code>. 
+          In order to begin capturing input, we use the syntax <code>input -></code>. 
           The expression can be thought of as follows, 
           “Anything that is typed in or captured, 
-          redirect and store in the variable immediately following the arrow -> “. 
+          redirect and store in the variable immediately following the arrow <code>-></code> “. 
           In the example above, all captured input is stored in the variable result. 
           Once DMS is done capturing input, the body of the input block begins its execution. 
           Simply put, the conditions contained within the body of the input block can be thought 
           of as if-else expression. 
           This means that the first expression, using the input, that evaluates to true will be executed. 
           In the above example, whenever user input happens to be "Hello" the program will output "Ahoj to you!", 
-          (Note: Ahoj is Czech for Hello) and in all other cases will default to the expression beginning with the underscore _. 
+          (Note: Ahoj is Czech for Hello) and in all other cases will default to the expression beginning with the underscore <code>_</code>. 
 
-          Note that within an input block whenever an underscore _ is used as the condition of an expression, 
+          Note that within an input block whenever an underscore <code>_</code> is used as the condition of an expression, 
           it will always evaluate to true; essentially acting as the default else of a branching statement.
         </p>
       </section>
@@ -1022,15 +1027,15 @@
           <div>
             <pre class="example">
               once {
-                num_dishes = 20
+                num_dishes = 1
               }
 
-              if num_dishes > 2 {
-                  pop false
+              if num_dishes >= 2 {
+                act "done"
+                pop true
               }
-              else {
-                  pop true
-              }
+
+              num_dishes = num_dishes + 1
             </pre>
             <blockquote>
               <button onclick="return runClicked(this);">Run</button>
@@ -1094,6 +1099,11 @@
 
     <section>
       <h2><dfn>Effective DMS</dfn></h2>
+      <p>
+        The <code>fork</code> statement is the most important aspect of DMS.
+        It lists possible branches of program flow.
+        DMS allows specifying the strategy for resolving a fork.
+      </p>
       <div>
         <pre class="example">
           once {
