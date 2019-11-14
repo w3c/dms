@@ -965,12 +965,12 @@
         <section>
           <h3><dfn>use</dfn> statement</h3>
           <p>
-              The <code>use</code> statement allows programmers to import variables and user defined 
+              The <code>use</code> statement allows programmers to import variables and user-defined 
               functions from an external component or script. 
               Consider the following example where we have a component containing a number of math functions, 
-              and a main component wanting to use all the predefined math functions.
-              Create the following two files: main.dms and math.dms. 
-              Inside math.dms place the following code segment.
+              and a main component wanting to reuse them.
+              Create the following two files: <code>main.dms</code> and <code>math.dms</code>. 
+              Inside <code>math.dms</code> place the following code segment.
           </p>
           <pre class="example">
             once {
@@ -985,8 +985,8 @@
             }
           </pre>
           <p>
-            Now suppose that we wanted to use both the offset and square functions. 
-            Inside the main.dms file we could do so as follows
+            Now suppose that we wanted to use both the <code>square</code> and <code>increment</code> functions. 
+            Inside the <code>main.dms</code> file we write the following,
           </p>
           <pre class="example">
             once {
@@ -998,12 +998,14 @@
             act pi
           </pre>
           <p>
-            In order to introduce the component we begin with the keyword use, 
-            followed by the component name, in this case math. 
+            In order to introduce the component, we begin with the keyword <code>use</code>, 
+            followed by the component name, in this case <code>math</code>. 
             Note that we leave off the file extension. 
             
-            Next in order to bring all predefined functions into scope within main.dms we use the keyword import _. 
-            This can essentially be thought of as bringing everything that was defined within main.dms into scope and actually usable. 
+            Next in order to bring all predefined functions into scope within 
+            <code>main.dms</code> we use the keyword <code>import _</code>. 
+            This can essentially be thought of as bringing everything that was 
+            defined within <code>main.dms</code> into scope and actually usable. 
             The manner in which components are introduced might be a little tough to understand. 
             
             At a high level the use of components can be thought of as follows. 
@@ -1063,26 +1065,23 @@
           </pre>
           <p>
               There’s a lot going on in the above example, 
-              so lets break it down. In order to launch a sub-component we use the keyword run. 
-              The line containing run <code>"wash_dishes" () -> result</code> tells DMS that we want to pause our current component, 
+              so lets break it down. In order to launch a sub-component we use the keyword <code>run</code>. 
+              The line containing run <code>"wash_dishes" () -> result</code> 
+              tells DMS that we want to pause our current component, 
               run the sub-component, and wait for it to finish. 
               Upon finishing, the wash_dishes sub-component returns a Boolean value denoting its success, 
               which is stored in result. 
               (Note that the returned value of the sub-component does not have to be a Boolean value, 
               and can actually be any of the atomic or structure data types defined in the previous chapter.)  
-
-              The expressions that follow on lines 7-12 are again an example of conditional if-else expressions. 
+          </p>
+          <p>
+              The expressions that follow are again an example of conditional if-else expressions. 
               The first expression that evaluates to true will be executed, and the others will be ignored. 
-              In this case because we happen to be returning a Boolean value, whenever result is true, 
-              the first expression will be executed, and our program defaults to the case beginning with an underscore _ as this evaluates to true. 
+              In this case because we happen to be returning a Boolean value, whenever the result is true, 
+              the first expression will be executed, and our program defaults to the case 
+              beginning with an underscore <code>_</code> as this evaluates to true. 
               
-              The topics that we’ve covered in the past two chapter are common to most programming language. 
-              Beyond this point we begin to define the key ideas that make DMS special. 
-              We introduce the notion of what makes DMS a task-oriented programming language and illustrate 
-              how tasks can be broken down into actions that have a corresponding utility. 
-              With this notion of tasks, actions and utility we show how DMS allows programmers rid themselves of the 
-              overhead of having to think about the sequential-steps required to achieve a task and simply let DMS 
-              pick the best sequence of actions for you. Lets dive in!
+              
           </p>
         </section>
       </section>
@@ -1092,9 +1091,21 @@
     <section>
       <h2><dfn>Effective DMS</dfn></h2>
       <p>
+        Beyond this point we begin to define the key ideas that make DMS special. 
+        We introduce the notion of what makes DMS a task-oriented programming language and illustrate 
+        how tasks can be broken down into actions that have a corresponding utility. 
+        With this notion of tasks, actions and utility we show how DMS allows programmers to rid themselves of the 
+        overhead of having to think about the sequential-steps required to achieve a task and simply let DMS 
+        pick the best sequence of actions for you. Lets dive in!
+      </p>
+      <p>
         The <code>fork</code> statement is the most important aspect of DMS.
-        It lists possible branches of program flow.
-        DMS allows specifying the strategy for resolving a fork.
+        It lists possible branches of program flow in a declarative manner.
+      </p>
+      <p>
+        In the script below, we'll design a chat-bot that asks "What's the capital of France?". 
+        If you type an incorrect answer, such as "Rome", 
+        then the script will diagnose the mistake, and help you get to the answer.
       </p>
       <div>
         <pre class="example">
