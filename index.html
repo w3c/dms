@@ -364,208 +364,6 @@
       </section>
 
       <section>
-        <h3>Functions</h3>
-        <p>
-          Custom function definitions in DMS start with the keyword <code>def</code> and have a set of parentheses after the function name. 
-          The curly braces tell the compiler where the function body begins and ends. 
-          Consider the following function which simply returns the string, <code>"Greetings!"</code>.
-        </p>
-        <pre class="example">
-          def greet() {
-            pop "Greetings!"
-          }
-        </pre>
-        <p>
-          Our declaration of the greet function begins with the keyword <code>def</code>, 
-          is followed by the function name <code>greet</code>, and ends with a set of empty parentheses <code>()</code>. 
-          The function body contains all the logic that is expected to be executed when calling the function. 
-          In the above example, we simply return the string <code>"Greetings!"</code> using the keyword pop. 
-          In order to call our function and print the corresponding greeting, we use the keyword act. 
-        </p>
-        <div>
-          <pre class="example">
-            once {
-
-              def greet() {
-                pop "Greetings!"
-              }
-
-              act greet()
-
-            }
-          </pre>
-          <blockquote>
-            <button onclick="return runClicked(this);">Run</button>
-            <pre></pre>
-          </blockquote>
-        </div>
-        <p>
-          Functions in DMS can also be defined to have parameters, 
-          which are special variables that are part of the function declaration. 
-          The following re-declaration of the greet function allows programmers to pass in a variable of their choice, 
-          lets say the name of a user for example.
-        </p>
-        <div>
-          <pre class="example">
-            once {
-              programmer = "Naitian"
-              def greet(user) {
-                pop "Greetings " + user
-              }
-            }
-            act greet(programmer)
-          </pre>
-          <blockquote>
-            <button onclick="return runClicked(this);">Run</button>
-            <pre></pre>
-          </blockquote>
-        </div>
-
-        <section>
-          <h3>Built-in Functions</h3>
-          <h4>len</h4>
-          <p>
-            The len function returns the length of the given argument. 
-            Possible argument types include:  string, list, or dictionary.
-          </p>
-          <div>
-            <pre class="example">
-              once {
-                student_names = ["Jeremy", "Earle", "Chad"]
-                act len(student_names)
-              }
-            </pre>
-            <blockquote>
-              <button onclick="return runClicked(this);">Run</button>
-              <pre></pre>
-            </blockquote>
-          </div>
-
-          <h4>pick</h4>
-          <p>
-            The pick function allows programmers to pseudo-randomly select an item within a list.
-          </p>
-          <div>
-            <pre class="example">
-              once {
-                athlete_rankings = [
-                  {
-                    lonzo: 2
-                  },
-                  {
-                    zion: 1
-                  }
-                ]
-              }
-              
-              act pick(athlete_rankings)
-            </pre>
-            <blockquote>
-              <button onclick="return runClicked(this);">Run</button>
-              <pre></pre>
-            </blockquote>
-          </div>
-
-          <h4>get</h4>
-          <p>
-            The get function allows users to select a specific element of a list. 
-            In the above example if we wanted to retrieve the last element we could do so as follows.
-          </p>
-          <div>
-            <pre class="example">
-              once {
-                athlete_rankings = [
-                  {
-                    lonzo: 2
-                  },
-                  {
-                    zion: 1
-                  }
-                ]
-              }
-              
-              act get(len(athlete_rankings) - 1, athlete_rankings)
-            </pre>
-            <blockquote>
-              <button onclick="return runClicked(this);">Run</button>
-              <pre></pre>
-            </blockquote>
-          </div>
-
-          <h4>exists</h4>
-          <p>
-            The exists function allows programmers to check whether the given variable has been defined or not.
-          </p>
-          <div>
-            <pre class="example">
-              // If the variable `count` has been defined we increment the value by one,
-              // otherwise we gives it an initial value.
-              if exists("count") {
-                count = count + 1
-              }
-              else {
-                act "Initializing count to 0"
-                count = 0
-              }
-              act count
-            </pre>
-            <blockquote>
-              <button onclick="return runClicked(this);">Run</button>
-              <pre></pre>
-            </blockquote>
-          </div>
-          <p>
-            Note that because we don’t define the variable count anywhere, 
-            our program defaults to the else branch of the conditional statement, 
-            and you should see the following output.
-          </p>
-        </section>
-      </section>
-
-      <section>
-        <h3>Input Handling</h3>
-        <p>
-          Up to now all program behavior has been predefined. 
-          Variables have been assigned persistent values, and all output can be predetermined ahead of time. 
-          However part of what makes any program engaging and meaningful, 
-          is when a user or programmer is able to directly interact with the application. 
-          In this section we showcase how DMS captures and processes user input.
-
-          In DMS user input is handled by a special structure which assigns intents 
-          to a temporary user-defined variable, as follows.
-        </p>
-        <pre class="example">
-          once {
-            act "Hi there! I'm Parrot-Bot. I repeat anything you say!"
-          }
-          input -> result {
-            result == "Hello" {
-              act "Ahoj to you!"
-            }
-            _ {
-              act result
-            }
-          }
-        </pre>
-        <p>
-          In order to begin capturing input, we use the expression <code>input -></code>. 
-          The expression can be thought of as follows, 
-          “Anything that is typed in or captured, 
-          redirect and store in the variable immediately following the arrow -> “. 
-          In the example above, all captured input is stored in the variable result. 
-          Once DMS is done capturing input, the body of the input block begins its execution. 
-          Simply put, the conditions contained within the body of the input block can be thought 
-          of as if-else expression. 
-          This means that the first expression, using the input, that evaluates to true will be executed. 
-          In the above example, whenever user input happens to be "Hello" the program will output "Ahoj to you!", 
-          (Note: Ahoj is Czech for Hello) and in all other cases will default to the expression beginning with the underscore _. 
-
-          Note that within an input block whenever an underscore _ is used as the condition of an expression, 
-          it will always evaluate to true; essentially acting as the default else of a branching statement.
-        </p>
-      </section>
-
-      <section>
         <h3>Structures</h3>
         <p>
           The data types defined in the previous section are all atomic literals. 
@@ -644,6 +442,510 @@
             </blockquote>
           </div>
         </section>
+      </section>
+
+      <section>
+        <h3>Functions</h3>
+        <p>
+          Custom function definitions in DMS start with the keyword <code>def</code> and have a set of parentheses after the function name. 
+          The curly braces tell the compiler where the function body begins and ends. 
+          Consider the following function which simply returns the string, <code>"Greetings!"</code>.
+        </p>
+        <pre class="example">
+          def greet() {
+            pop "Greetings!"
+          }
+        </pre>
+        <p>
+          Our declaration of the greet function begins with the keyword <code>def</code>, 
+          is followed by the function name <code>greet</code>, and ends with a set of empty parentheses <code>()</code>. 
+          The function body contains all the logic that is expected to be executed when calling the function. 
+          In the above example, we simply return the string <code>"Greetings!"</code> using the keyword pop. 
+          In order to call our function and print the corresponding greeting, we use the keyword act. 
+        </p>
+        <div>
+          <pre class="example">
+            once {
+
+              def greet() {
+                pop "Greetings!"
+              }
+
+              act greet()
+
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          Functions in DMS can also be defined to have parameters, 
+          which are special variables that are part of the function declaration. 
+          The following re-declaration of the greet function allows programmers to pass in a variable of their choice, 
+          lets say the name of a user for example.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              programmer = "Naitian"
+              def greet(user) {
+                pop "Greetings " + user
+              }
+            }
+            act greet(programmer)
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+
+        <section>
+          <h3>Built-in Functions</h3>
+          A handful of standard functions are available.
+
+          <section>
+            <h3>Comparison operators</h3>
+            Check for equality with <code>==</code> or <code>!=</code>.
+            Compare numbers with <code>></code>, <code>>=</code>, <code><</code>, and <code><=</code>.
+            <div>
+              <pre class="example">
+                once {
+                  x = 1
+                  y = 2
+                  act x == y
+                  act x != y
+                  act x < y
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>Boolean operators</h3>
+            Typical Boolean functions such as <code>&&</code>, <code>||</code>, and <code>!</code> are supported.
+            <div>
+              <pre class="example">
+                once {
+                  x = true
+                  act x || false
+                  act (x && !x) == false
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>Arithmetic operations</h3>
+            Frequently used mathematical functions over numbers are available, such as 
+            <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, and <code>floor</code>.
+            <div>
+              <pre class="example">
+                once {
+                  x = (1 + 2 * 3) / 4
+                  y = (x + 0.25) % 2
+                  z = floor(x)
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>Type casting operators</h3>
+            The <code>to_num</code> and <code>to_str</code> operators allow changing types between numbers and strings.
+            <div>
+              <pre class="example">
+                once {
+                  number = 13.5
+                  act "The number is " + to_str(number)
+                  guess = "10"
+                  act "You're off by..."
+                  act number - to_num(guess)
+
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>++</h3>
+            <p>
+              The <code>++</code> operator concatenates two lists. 
+              Note, on the other hand, the <code>+</code> operator combines strings.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  act [1, 2, 3] ++ [4, 5, 6]
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>len</h3>
+            <p>
+              The <code>len</code> function returns the length of the given argument. 
+              Possible argument types include: string, list, or dictionary.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  school_data = {
+                    student_names: ["Jeremy", "Earle", "Chad"],
+                    school_name: "Institute of Good Learning"
+                  }
+                  act len(school_data)
+                  act len(school_data["student_names"])
+                  act len(school_data["student_names"][0])
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+          
+          <section>
+            <h3>pick</h3>
+            <p>
+              The <code>pick</code> function allows programmers to pseudo-randomly select an item from a list.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  athlete_rankings = [
+                    { lonzo: 2 },
+                    { zion: 1 }
+                  ]
+                }
+                
+                act pick(athlete_rankings)
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+          
+          <section>
+            <h3>get</h3>
+            <p>
+              The <code>get</code> function allows users to select a specific element of a list. 
+              In the above example if we wanted to retrieve the last element we could do so as follows.
+            </p>
+            <div>
+              <pre class="example">
+                act get(len(athlete_rankings) - 1, athlete_rankings)
+              </pre>
+            </div>
+            <p>
+              Or, use the <code>[ ]</code> notation, which is just a syntactic-sugar of <code>get</code>, as shown below.
+            </p>
+            <div>
+              <pre class="example">
+                act athlete_rankings[len(athlete_rankings) - 1]
+              </pre>
+            </div>
+          </section>
+
+          <section>
+            <h3>range</h3>
+            <p>
+              The <code>range</code> function generates a list from the starting value (inclusive) to the ending value (exclusive).
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  act range(1, 11)
+                  act range(1, 5) ++ range(5, 11)
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+            <p>An optional third argument specifies the step-size.</p>
+            <div>
+              <pre class="example">
+                once {
+                  act range(1, 11, 2)
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>map</h3>
+            <p>
+              The <code>map</code> function iterates through a list passed in, and produces a new list with modified elements.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  act map(to_str, [1, 2, 3])
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+            <p>
+              Multiple lists may be passed in, as long as the operator passed in supports that number of arguments.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  act map("+", [1, 2, 3], [4, 5, 6])
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+            <p>This opens up a lot of useful list manipulation techniques, such as implementing <code>zip</code> below.</p>
+            <div>
+              <pre class="example">
+                once {
+                  def zip(xs, ys) {
+                    def pair(x, y) {
+                      pop [x, y]
+                    }
+                    pop map(zip, xs, ys)
+                  }
+                  act zip([1, 2, 3], ["a", "b", "c"])
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>foldl</h3>
+            <p>
+              The <code>foldl</code> function iterates through a list from the left to yield a value by 
+              applying a given operator to each element of the list with an accumulator.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  def sum(xs) {
+                    pop foldl("+", 0, xs)
+                  }
+                  act sum([1, 2, 3])
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>sort, shuffle, reverse</h3>
+            <p>
+              The <code>sort</code>, <code>shuffle</code>, and <code>reverse</code> functions operate on lists.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  xs = [4, 3, 2, 1]
+                  ys = shuffle(xs)
+                  act sort(ys) == xs
+                  act reverse(sort(ys)) == xs
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>in</h3>
+            <p>
+              The <code>in</code> function is an in-fix operator that checks if an element exists within a structure.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  month = {
+                    days: range(1, 31),
+                    month: "June"
+                  }
+                  act "days" in month
+                  act 31 in month["days"]
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>patch</h3>
+            <div>
+              <pre class="example">
+                once {
+                  info = {name: "unknown", inventory: {belt: 1, jacket: 2}}
+                  act patch(info, {name: "Bob", inventory: {jacket: 3}})
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>edit</h3>
+            <div>
+              <pre class="example">
+                once {
+                  info = {name: "unknown", inventory: {belt: 1, jacket: 2}}
+                  act edit(info, "Bob", "name")
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3>from_list</h3>
+            <p>
+              The <code>from_list</code> function converts a list of pairs (2-element lists) into a dictionary.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  table = [
+                    ["glasses", 1],
+                    ["jacket", 2],
+                    ["shirt", 0]
+                  ]
+                  act from_list(table)
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+          
+          <section>
+            <h3>exists</h3>
+            <p>
+              The <code>exists</code> function allows programmers to check whether the given variable has been defined or not.
+            </p>
+            <div>
+              <pre class="example">
+                if exists("count") {
+                  count = count + 1
+                }
+                else {
+                  act "Initializing count to 0"
+                  count = 0
+                }
+                act count
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+            <p>
+              Note that because we haven't defined the variable <code>count</code> anywhere, 
+              our program defaults to the <code>else</code> branch of the conditional statement.
+            </p>
+          </section>
+          
+        </section>
+      </section>
+
+      <section>
+        <h3>Input Handling</h3>
+        <p>
+          Up to now all program behavior has been predefined. 
+          Variables have been assigned persistent values, and all output can be predetermined ahead of time. 
+          However part of what makes any program engaging and meaningful, 
+          is when a user or programmer is able to directly interact with the application. 
+          In this section we showcase how DMS captures and processes user input.
+
+          In DMS user input is handled by a special structure which assigns intents 
+          to a temporary user-defined variable, as follows.
+        </p>
+        <pre class="example">
+          once {
+            act "Hi there! I'm Parrot-Bot. I repeat anything you say!"
+          }
+          input -> result {
+            result == "Hello" {
+              act "Ahoj to you!"
+            }
+            _ {
+              act result
+            }
+          }
+        </pre>
+        <p>
+          In order to begin capturing input, we use the expression <code>input -></code>. 
+          The expression can be thought of as follows, 
+          “Anything that is typed in or captured, 
+          redirect and store in the variable immediately following the arrow -> “. 
+          In the example above, all captured input is stored in the variable result. 
+          Once DMS is done capturing input, the body of the input block begins its execution. 
+          Simply put, the conditions contained within the body of the input block can be thought 
+          of as if-else expression. 
+          This means that the first expression, using the input, that evaluates to true will be executed. 
+          In the above example, whenever user input happens to be "Hello" the program will output "Ahoj to you!", 
+          (Note: Ahoj is Czech for Hello) and in all other cases will default to the expression beginning with the underscore _. 
+
+          Note that within an input block whenever an underscore _ is used as the condition of an expression, 
+          it will always evaluate to true; essentially acting as the default else of a branching statement.
+        </p>
       </section>
 
       <section>
