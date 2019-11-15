@@ -35,7 +35,7 @@
         ],
         shortName: "dms",
         addSectionLinks: true,
-        isPreview: true,
+        isPreview: false,
         link: {
           "check-punctuation": true
         },
@@ -77,8 +77,7 @@
       <h2>Getting Started</h2>
       <p>
         The code snippets presented in this page can be evaluated by running the "Run" button,
-        which compiles the DM Script into DMPL JSON, and then runs the JSON on a JavaScript runtime.
-        Follow along closely!
+        which compiles the DM Script into [[DMPL]] JSON, and then runs the JSON on a JavaScript runtime.
       </p>
     </section>
 
@@ -86,7 +85,7 @@
       <h2><dfn>Tutorial</dfn>: Guessing Game</h2>
       <p>
         This guessing game chat-bot will help us better understand DMS.
-        Let's build a simple prompt that asks the user for some input.
+        Let's build a simple prompt that asks the user for some <a>input</a>.
         We start by printing out messages using <code>act</code>, and 
         then awaiting the user's input.
       </p>
@@ -109,7 +108,7 @@
       </div>
 
       <p>
-        The <code>input -></code> statement awaits for user input, and feeds it to a variable of our choosing.
+        The <code>input -></code> statement awaits for user input, and feeds it to a <a>variable</a> of our choosing.
         In this case, the variable <code>guess</code> is populated with the user's input.
       </p>
 
@@ -175,7 +174,7 @@
         <h3><dfn>Variables</dfn></h3>
         <p>
           In programming, a variable is nothing more than a placeholder for some value. 
-          The strings <code>“Chai”</code>, and <code>“Moo”</code> are simply values that a 
+          The <a>strings</a> <code>“Chai”</code>, and <code>“Moo”</code> are simply values that a 
           placeholder <code>dog_name</code> could take on, 
           as can be seen in the following example.
         </p>
@@ -202,10 +201,10 @@
       <section>
         <h3><dfn>Control Flow</dfn></h3>
         <p>
-          In order to remove these redundant variable creation and assignments 
-          we can wrap code in a block beginning with the keyword <code>once</code>. 
-          The <code>once</code> keyword tells the compiler that the variable creation and 
-          assignments should only be executed one time over the lifetime of the component.
+          In order to remove these redundant <a>variable</a> creation and assignments 
+          we can wrap code in a block beginning with the keyword <dfn><code>once</code></dfn>. 
+          The <a>once</a> keyword tells the compiler that the variable creation and 
+          assignments should only be executed one time over the lifetime of the <a>component</a>.
         </p>
         <div>
           <pre class="example">
@@ -226,7 +225,7 @@
           of DMS code are <a>if statements</a>.
           Recall that in DMS there is always an implicit infinite loop wrapping our code, 
           meaning that loops are inherently built in, 
-          and any code outside of a once block will be repeatedly executed over the lifetime of our program. 
+          and any code outside of a <a>once</a> block will be repeatedly executed over the lifetime of our program. 
         </p>
         <section>
           <h3><dfn>If Statements</dfn></h3>
@@ -337,7 +336,7 @@
         <p>
           Forks allow powerful customization of the branching behavior.
           In the example below, the <code>fork</code> picks a child-block at random.
-          We can optionaly change the fork-strategy by providing a dictionary 
+          We can optionaly change the <dfn>fork-strategy</dfn> by providing a dictionary 
           in a decorator <code>#{}</code> directly before the statement.
           In the example below, a strategy of <code>{depth: 0}</code> 
           is associated with the <code>fork</code>.
@@ -360,7 +359,7 @@
           </blockquote>
         </div>
         <p>
-          The content of the dictionary specifying the fork-strategy depends 
+          The content of the dictionary specifying the <a>fork-strategy</a> depends 
           on what the underlying runtime supports.
           In this case, <code>{depth: 0}</code> means use bounded depth-first search (BDFS),
           with a depth of <code>0</code> to resolve the fork.
@@ -369,8 +368,8 @@
           such as Monte Carlo Tree Search.
         </p>
         <p>
-          The heuristic function for the search algorithm is specified by declaring a <code>model</code>. 
-          The <code>model</code> of a fork-strategy is a list of lists, representing preferences.
+          The heuristic function for the search algorithm is specified by declaring a <dfn>model</dfn>. 
+          The <a>model</a> of a <a>fork-strategy</a> is a list of lists, representing preferences.
           For example, the pair <code>[{x: 0}, {x:10}]</code>, declares that the value of <code>x</code>
           is preferred to be <code>0</code> as opposed to <code>10</code>.
           Internally, the runtime infers a utility-function, which is a real-valued function over the
@@ -397,7 +396,7 @@
           </blockquote>
         </div>
         <p>
-          Changing the preference <code>model</code> changes the program behavior.
+          Changing the preference <a>model</a> changes the program behavior.
           For example, by swapping the pair <code>[{x: 10}, {x: 0}]</code>,
           the program now counts up instead of counting down.
         </p>
@@ -423,7 +422,7 @@
         </div>
         <p>
           If we want to say that the value of <code>x</code> should be <code>5</code>,
-          we can write the model as a list of preference-pairs, as follows.
+          we can write the <a>model</a> as a list of preference-pairs, as follows.
         </p>
         <div>
           <pre class="example">
@@ -483,7 +482,8 @@
           </blockquote>
         </div>
         <p>
-          Unfortunately, the program chooses the suboptimal sequence of actions.
+          Unfortunately, the program chooses the suboptimal sequence of actions: 
+          it chooses to do nothing after eating up all the available food.
           Let's increase its intelligence by changing the fork-strategy to <code>{depth: 3}</code>.
         </p>
         <div>
@@ -525,7 +525,7 @@
         <h3><dfn>Primitive Types</dfn></h3>
         <p>
           The example in the <a>variables</a> section only allowed the variable <code>dog_name</code>
-          to take on string values. 
+          to take on <a>string</a> values. 
           However, DMS is a dynamically typed language meaning that variables can 
           take on any basic data type such as <dfn><code>string</code></dfn>, <dfn><code>float</code></dfn>, and
           <dfn><a>Boolean</a></dfn>.
@@ -648,8 +648,8 @@
           Custom function definitions in DMS start with the keyword <code>def</code> and have a set of 
           parentheses after the function name. 
           The curly-brackets <code>{ }</code> tell the compiler where the function body begins and ends. 
-          Lastly, a <code>pop</code> statement returns the value to be used by the caller.
-          Consider the following function which simply returns the <code>string</code>, <code>"Greetings!"</code>.
+          Lastly, a <dfn><code>pop</code></dfn> statement returns the value to be used by the caller.
+          Consider the following function which simply returns the <a>string</a>, <code>"Greetings!"</code>.
         </p>
         <pre class="example">
           def greet() {
@@ -660,7 +660,7 @@
           Our declaration of the <code>greet</code> function begins with the keyword <code>def</code>, 
           is followed by the function name <code>greet</code>, and ends with a set of empty parentheses <code>()</code>. 
           The function body contains all the logic that is expected to be executed when calling the function. 
-          In the above example, we simply return the <code>string</code> <code>"Greetings!"</code> using the keyword <code>pop</code>. 
+          In the above example, we simply return the <code>string</code> <code>"Greetings!"</code> using the keyword <a>pop</a>. 
           In order to call our function and print the corresponding greeting, we use the keyword <code>act</code>. 
         </p>
         <div>
@@ -1123,12 +1123,12 @@
         <h3><dfn>Input</dfn> Handling</h3>
         <p>
           Up to now all program behavior has been predefined. 
-          Variables have been assigned persistent values, and all output can be predetermined ahead of time. 
+          <a>Variables</a> have been assigned persistent values, and all output can be predetermined ahead of time. 
           However part of what makes any program engaging and meaningful, 
           is when a user or programmer is able to directly interact with the application. 
           In this section we showcase how DMS captures and processes user input.
 
-          In DMS user input is handled by a special structure which assigns intents 
+          In DMS, user input is handled by a special structure which assigns intents 
           to a temporary user-defined variable, as follows.
         </p>
         <div>
