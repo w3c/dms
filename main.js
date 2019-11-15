@@ -10,9 +10,12 @@ let deleteWorker = function() {
     worker = null;
 }
 
-let runClicked = function(context, debug_mode) {
+let runClicked = function(context, debug_mode, max_lines) {
     if (debug_mode === undefined) {
         debug_mode = true;
+    }
+    if (max_lines === undefined) {
+        max_lines = 6;
     }
     if (worker !== null) {
         deleteWorker();
@@ -57,7 +60,7 @@ let runClicked = function(context, debug_mode) {
                     outputArea.innerText += `${dataJson['@set']} = ${JSON.stringify(dataJson['val'])}\n`;
                 }
                 
-                if (outputArea.innerText.split('\n').length > 6) {
+                if (outputArea.innerText.split('\n').length > max_lines) {
                     outputArea.innerText += `...`;
                     deleteWorker();
                 }

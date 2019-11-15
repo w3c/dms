@@ -38,6 +38,20 @@
         isPreview: true,
         link: {
           "check-punctuation": true
+        },
+        localBiblio: {
+          "DMPL": {
+            "authors": [
+              "Nishant Shukla",
+              "Nelson Solano",
+              "Victor Zhang"
+            ],
+            "href": "https://www.w3.org/2019/04/dmpl",
+            "title": "Dialogue Manager Programming Language (DMPL)",
+            "publisher": "W3C",
+            "status": "W3C Community Group Final Specification",
+            "rawDate": "2019-04-16"
+          }
         }
       };
     </script>
@@ -50,9 +64,9 @@
       <p>
         This is the first version of the Dialogue Manager Script (DMS) documentation,
         which will demonstrate the current state and capabilities of DMS 
-        through a <a>tutorial</a>, outline the <a>Syntax and Semantics</a>,
+        through a <a>tutorial</a>, outline the <a>syntax and semantics</a>,
         and discuss how to write <a>effective DMS</a>. 
-        DMS is a high-level language that compiles down to DMPL compliant JSON.
+        DMS is a high-level language that compiles down to [[DMPL]] compliant JSON.
       </p>
     </section>
 
@@ -272,7 +286,9 @@
       <section>
         <h3><dfn>Fork Statements</dfn></h3>
         <p>
-          Forks are generalized <a>if statements</a>. Consider the trivial example below of branching logic.
+          Forks are generalized <a>if statements</a>. 
+          They're the heart and soul of DM Script.
+          As a refresher, let's consider the trivial example below of branching logic.
         </p>
         <div>
           <pre class="example">
@@ -292,8 +308,8 @@
           A <code>fork</code> statement allows a more general way of representing branching behavior.
           First, let's recreate the example above using <code>fork</code>.
           Think of it as a fork in the road, where we can only go down one candidate path. 
-          Each candidate has an entry-condition, 
-          so we'll notice in the example below that the underscore <code>_</code> 
+          Each candidate has an entry-condition.
+          In the example below, notice that the underscore <code>_</code> 
           is a shortcut for the Boolean value <code>true</code>.
         </p>
         <div>
@@ -313,14 +329,18 @@
           </blockquote>
         </div>
         <p>
-          By default, a fork picks the first path whose entry-condition is met, 
+          By default, a <code>fork</code> picks the first path whose entry-condition is met, 
           from top to bottom.
+          This method for resolving a fork is also called the "greedy" strategy,
+          because it picks the first possible candidate instead of considering all candidates.
         </p>
         <p>
           Forks allow powerful customization of the branching behavior.
-          In the example below, the fork picks a child-block at random.
-          We provide the fork-strategy as a dictionary in a decorator <code>#{}</code>
-          directly before the statement.
+          In the example below, the <code>fork</code> picks a child-block at random.
+          We can optionaly change the fork-strategy by providing a dictionary 
+          in a decorator <code>#{}</code> directly before the statement.
+          In the example below, a strategy of <code>{depth: 0}</code> 
+          is associated with the <code>fork</code>.
         </p>
         <div>
           <pre class="example">
@@ -348,12 +368,163 @@
           Different run-times may support different search algorithms,
           such as Monte Carlo Tree Search.
         </p>
+        <p>
+          The heuristic function for the search algorithm is specified by declaring a <code>model</code>. 
+          The <code>model</code> of a fork-strategy is a list of lists, representing preferences.
+          For example, the pair <code>[{x: 0}, {x:10}]</code>, declares that the value of <code>x</code>
+          is preferred to be <code>0</code> as opposed to <code>10</code>.
+          Internally, the runtime infers a utility-function, which is a real-valued function over the
+          variables in DM Script, that provides a total-ordering of preferences.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              x = 5
+            }
+            #{depth: 1, model: [[{x: 0}, {x: 10}]]}
+            fork {
+              _ {
+                x = x + 1
+              }
+              _ {
+                x = x - 1
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          Changing the preference <code>model</code> changes the program behavior.
+          For example, by swapping the pair <code>[{x: 10}, {x: 0}]</code>,
+          the program now counts up instead of counting down.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              x = 5
+            }
+            #{depth: 1, model: [[{x: 10}, {x: 0}]]}
+            fork {
+              _ {
+                x = x + 1
+              }
+              _ {
+                x = x - 1
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          If we want to say that the value of <code>x</code> should be <code>5</code>,
+          we can write the model as a list of preference-pairs, as follows.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              x = 3
+            }
+            #{depth: 1, model: [[{x: 5}, {x: 0}], [{x: 5}, {x: 10}]]}
+            fork {
+              _ {
+                x = x + 1
+              }
+              _ {
+                x = x - 1
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          Consider the following scenario, where a autonomous agent has 3 possible actions,
+          (1) eat food, (2) do nothing, or (3) work for food.
+          In DM Script, we can use <code>fork</code> to define 
+          the pre-conditions and outcomes of each action.
+          We specify that <code>{health: 10}</code> is desirable over <code>{health: -10}</code>,
+          and use BDFS to resolve the fork, with a depth of <code>1</code>.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              health = 2
+              food = 1
+            }
+            #{depth: 1, model: [[{health: 10}, {health: -10}]]}
+            fork {
+              food > 0 {
+                act "eat"
+                food = food - 1
+                health = health + 3
+              }
+              _ {
+                act "do nothing"
+                health = health - 1
+              }
+              _ {
+                act "work"
+                food = food + 1
+                health = health - 2
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this, false);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          Unfortunately, the program chooses the suboptimal sequence of actions.
+          Let's increase its intelligence by changing the fork-strategy to <code>{depth: 3}</code>.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              health = 2
+              food = 1
+            }
+            #{depth: 3, model: [[{health: 10}, {health: -10}]]}
+            fork {
+              food > 0 {
+                act "eat"
+                food = food - 1
+                health = health + 3
+              }
+              _ {
+                act "do nothing"
+                health = health - 1
+              }
+              _ {
+                act "work"
+                food = food + 1
+                health = health - 2
+              }
+            }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this, false);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          We'll cover more interesting use-cases of <code>fork</code> in the <a>effective DMS</a> section.
+        </p>
+
       </section>
 
       <section>
         <h3><dfn>Primitive Types</dfn></h3>
         <p>
-          The example in the <a>Variables</a> section only allowed the variable <code>dog_name</code>
+          The example in the <a>variables</a> section only allowed the variable <code>dog_name</code>
           to take on string values. 
           However, DMS is a dynamically typed language meaning that variables can 
           take on any basic data type such as <dfn><code>string</code></dfn>, <dfn><code>float</code></dfn>, and
@@ -392,7 +563,7 @@
       <section>
         <h3><dfn>Structures</dfn></h3>
         <p>
-          The <a>Primitive Types</a> defined in the previous section are all <dfn>atomic</dfn> literals.
+          The <a>primitive types</a> defined in the previous section are all <dfn>atomic</dfn> literals.
           DMS also allows programmers to build more complex structures such as lists, or dictionaries.
         </p>
         <section>
@@ -1142,7 +1313,7 @@
         Beyond this point we begin to define the key ideas that make DMS special. 
         We introduce the notion of what makes DMS a task-oriented programming language and illustrate 
         how tasks can be broken down into actions that have a corresponding utility. 
-        With this notion of tasks, actions and utility we show how DMS allows programmers to rid themselves of the 
+        With this notion of tasks, actions, and utility we show how DMS allows programmers to rid themselves of the 
         overhead of having to think about the sequential-steps required to achieve a task and simply let DMS 
         pick the best sequence of actions for us. Lets dive in!
       </p>
@@ -1151,9 +1322,17 @@
         It lists possible branches of program flow in a declarative manner.
       </p>
       <p>
-        In the script below, we'll design a chat-bot that asks "What's the capital of France?". 
+        In this section, we'll design a chat-bot that asks "What's the capital of France?". 
         If we type an incorrect answer, such as "Rome", 
         then the script will diagnose the mistake, and help us get to the answer.
+      </p>
+      <p>
+        First, set up a couple variables and constants.
+        A <code>score</code> variable will be used to track dialogue quality.
+        The entities, such as <code>ROME</code>, and relations, such as <code>CITY_IN</code>, 
+        will be declared as variables, just to keep our code clean.
+        We'll also track a <code>user_response</code> variable that indicates whether 
+        the dialogue has already processed the user's input.
       </p>
       <div>
         <pre class="example">
@@ -1163,9 +1342,39 @@
                 ["Europe", "France", "Italy", "Rome", "Paris", "Lyon"]
             COUNTRY_IN, NEXT_TO, CITY_IN, CAPITAL_OF = 
                 ["a country in", "next to", "a city in", "the capital of"]
-            preferences = [
-                [{score: 10}, {score: 0}]
-            ]
+            user_response = null
+          }
+        </pre>
+        <blockquote>
+          <button onclick="return runClicked(this, true);">Run</button>
+          <pre></pre>
+        </blockquote>
+      </div>
+
+      The remaining bit of code obtains the user's input and 
+      then interpets the answer. 
+      The program loops at the <code>else</code> branch until 
+      the <code>user_response</code> variable is reset to <code>null</code>.
+      <pre class="example">
+        if user_response == null {
+          // get the user's input
+        } else {
+          // interpret the user's input
+        }
+      </pre>
+      
+      <p>
+        The complete script is shown below.
+      </p>
+
+      <div>
+        <pre class="example">
+          once {
+            score = 0
+            EUROPE, FRANCE, ITALY, ROME, PARIS, LYON = 
+                ["Europe", "France", "Italy", "Rome", "Paris", "Lyon"]
+            COUNTRY_IN, NEXT_TO, CITY_IN, CAPITAL_OF = 
+                ["a country in", "next to", "a city in", "the capital of"]
             user_response = null
           }
           
@@ -1181,7 +1390,7 @@
               }
           }
           else {
-              #{depth: 4, model: preferences}
+              #{depth: 4, model: [[{score: 10}, {score: 0}]]}
               fork {
                   [relation, entity] == [COUNTRY_IN, EUROPE] {
                       answer = ITALY
