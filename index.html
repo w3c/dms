@@ -132,8 +132,17 @@
     <section>
       <h2><dfn>Syntax and Semantics</dfn></h2>
       <p>
-        This chapter covers concepts common to most programming languages 
-        and how they work in DMS. 
+        The DMS syntax is loosely based off Rust.
+        Curly-brackets <code>{ }</code> establish a block of code, 
+        statements do not need a trailing semi-colon <code>;</code>,
+        and labels before the curly-brackets annotate the behavior of the block.
+        Similar to ECMAScript, DMS is not a strongly typed language.
+      </p>
+      <p>
+        Scripts written in DM Script are also called <dfn>components</dfn>.
+        The runtime shall evaluate the component in an infinite loop, 
+        similar to game-loops inherent in most game engines.
+        Components may call other components through <a>run</a> or <a>use</a> statements.
       </p>
 
       <section>
@@ -180,9 +189,8 @@
         <h3>Control Flow</h3>
         <p>
           In order to remove these redundant variable creation and assignments 
-          we can wrap code that will only be executed a single time in a block 
-          beginning with the keyword once. 
-          The once keyword tells the compiler that the variable creation and 
+          we can wrap code in a block beginning with the keyword <code>once</code>. 
+          The <code>once</code> keyword tells the compiler that the variable creation and 
           assignments should only be executed one time over the lifetime of the component.
         </p>
         <div>
@@ -201,7 +209,7 @@
           Deciding whether or not to run some code depending on if a condition is true 
           is a basic building block in most programming languages. 
           The most common construct thats allows programmers to control the flow of execution 
-          of DMS code are if statements.
+          of DMS code are <a>if statements</a>.
           Recall that in DMS there is always an implicit infinite loop wrapping our code, 
           meaning that loops are inherently built in, 
           and any code outside of a once block will be repeatedly executed over the lifetime of our program. 
@@ -209,11 +217,9 @@
         <section>
           <h3><dfn>If Statements</dfn></h3>
           <p>
-            An if statement allows you to branch your code depending on conditions. 
-            You provide a condition and then state, 
-            “If this condition is met, run this block of code. 
-            If the condition is not met, do not run this block of code.” 
-            All if expressions start with the keyword <code>if</code>, and followed up by a condition that evaluates to boolean value. 
+            An <code>if</code> statement allows you to branch your code depending on conditions. 
+            These statements start with the keyword <code>if</code>, and 
+            follow up with a condition that evaluates to a Boolean value. 
           </p>
           <div>
             <pre class="example">
@@ -236,7 +242,8 @@
             </blockquote>
           </div>
           <p>
-            You can have multiple conditions by combining <code>if</code> and <code>else</code> in an <code>else if</code> block. For example:
+            We can link multiple conditions by combining <code>if</code> and <code>else</code> 
+            in an <code>else if</code> block. For example:
           </p>
           <div>
             <pre class="example">
@@ -282,8 +289,12 @@
           </blockquote>
         </div>
         <p>
-          A fork statement allows a more general way of representing branching behavior.
-          The example below shows the same logic and above.
+          A <code>fork</code> statement allows a more general way of representing branching behavior.
+          First, let's recreate the example above using <code>fork</code>.
+          Think of it as a fork in the road, where you can only go down one candidate path. 
+          Each candidate has an entry-condition, 
+          so you'll notice in the example below that the underscore <code>_</code> 
+          is a shortcut for the Boolean value <code>true</code>.
         </p>
         <div>
           <pre class="example">
@@ -302,8 +313,14 @@
           </blockquote>
         </div>
         <p>
+          By default, a fork picks the first path whose entry-condition is met, 
+          from top to bottom.
+        </p>
+        <p>
           Forks allow powerful customization of the branching behavior.
           In the example below, the fork picks a child-block at random.
+          We provide the fork-strategy as a dictionary in a decorator <code>#{}</code>
+          directly before the statement.
         </p>
         <div>
           <pre class="example">
@@ -322,6 +339,15 @@
             <pre></pre>
           </blockquote>
         </div>
+        <p>
+          The content of the dictionary specifying the fork-strategy depends 
+          on what the underlying runtime supports.
+          In this case, <code>{depth: 0}</code> means use bounded depth-first search (BDFS),
+          with a depth of <code>0</code> to resolve the fork.
+          A depth of <code>0</code> in BDFS is effectively picking a candidate at random. 
+          Different run-times may support different search algorithms,
+          such as Monte Carlo Tree Search.
+        </p>
       </section>
 
       <section>
@@ -372,7 +398,8 @@
           <h3>List</h3>
           <p>
             A list can is an ordered arrangement of other structures. 
-            All elements are enclosed within brackets, and separated by commas as follows.
+            All elements are enclosed within square-brackets <code>[ ]</code>, 
+            and separated by commas as follows.
           </p>
           <div>
             <pre class="example">
@@ -416,10 +443,10 @@
             </blockquote>
           </div>
           <p>
-            Take note on the syntax that was used to create the dictionary 
+            Take note of the syntax that was used to create the dictionary 
             in the above code snippet. 
             The keys of the dictionary are symbols which are a finite sequence 
-            of characters without the double quotation marks, 
+            of characters without the double quotation-marks, 
             and the values in this example are simply integer values. 
             Note that when accessing the values of a dictionary, 
             the keys must be enclosed within double quotation marks.
@@ -446,8 +473,10 @@
       <section>
         <h3>Functions</h3>
         <p>
-          Custom function definitions in DMS start with the keyword <code>def</code> and have a set of parentheses after the function name. 
-          The curly braces tell the compiler where the function body begins and ends. 
+          Custom function definitions in DMS start with the keyword <code>def</code> and have a set of 
+          parentheses after the function name. 
+          The curly-brackets <code>{ }</code> tell the compiler where the function body begins and ends. 
+          Lastly, a <code>pop</code> statement returns the value to be used by the caller.
           Consider the following function which simply returns the string, <code>"Greetings!"</code>.
         </p>
         <pre class="example">
@@ -456,11 +485,11 @@
           }
         </pre>
         <p>
-          Our declaration of the greet function begins with the keyword <code>def</code>, 
+          Our declaration of the <code>greet</code> function begins with the keyword <code>def</code>, 
           is followed by the function name <code>greet</code>, and ends with a set of empty parentheses <code>()</code>. 
           The function body contains all the logic that is expected to be executed when calling the function. 
-          In the above example, we simply return the string <code>"Greetings!"</code> using the keyword pop. 
-          In order to call our function and print the corresponding greeting, we use the keyword act. 
+          In the above example, we simply return the string <code>"Greetings!"</code> using the keyword <code>pop</code>. 
+          In order to call our function and print the corresponding greeting, we use the keyword <code>act</code>. 
         </p>
         <div>
           <pre class="example">
@@ -477,10 +506,10 @@
           </blockquote>
         </div>
         <p>
-          Functions in DMS can also be defined to have parameters, 
+          Functions in DMS can also have parameters, 
           which are special variables that are part of the function declaration. 
           The following re-declaration of the greet function allows programmers to pass in a variable of their choice, 
-          lets say the name of a user for example.
+          such as the name of a user in the following example.
         </p>
         <div>
           <pre class="example">
@@ -500,8 +529,8 @@
 
         <section>
           <h3>Built-in Functions</h3>
-          A handful of standard functions are available.
-
+          A handful of functions are available out of the box in DMS, forming a standard library. 
+          The sections below cover the essential functions.
           <section>
             <h3>Comparison operators</h3>
             Check for equality with <code>==</code> or <code>!=</code>.
