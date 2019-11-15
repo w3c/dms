@@ -137,7 +137,7 @@
       </p>
 
       <section>
-        <h3>Comments</h3>
+        <h3><dfn>Comments</dfn></h3>
         <p>
           Programmers may leave notes, or comments, in their code. 
           These comments are ignored by the compiler, 
@@ -149,7 +149,7 @@
       </section>
 
       <section>
-        <h3>Variables</h3>
+        <h3><dfn>Variables</dfn></h3>
         <p>
           In programming, a variable is nothing more than a placeholder for some value. 
           The strings <code>“Chai”</code>, and <code>“Moo”</code> are simply values that a 
@@ -177,7 +177,7 @@
       </section>
 
       <section>
-        <h3>Control Flow</h3>
+        <h3><dfn>Control Flow</dfn></h3>
         <p>
           In order to remove these redundant variable creation and assignments 
           we can wrap code that will only be executed a single time in a block 
@@ -263,7 +263,7 @@
       </section>
 
       <section>
-        <h3>Fork Statements</h3>
+        <h3><dfn>Fork Statements</dfn></h3>
         <p>
           Forks are generalized <a>if statements</a>. Consider the trivial example below of branching logic.
         </p>
@@ -325,12 +325,12 @@
       </section>
 
       <section>
-        <h3>Primitive Types</h3>
+        <h3><dfn>Primitive Types</dfn></h3>
         <p>
-          In the previous example we only allowed the variable <code>dog_name</code> 
+          The example in the <a>Variables</a> section only allowed the variable <code>dog_name</code>
           to take on string values. 
           However, DMS is a dynamically typed language meaning that variables can 
-          take on any basic data type such as string, float, and Boolean.
+          take on any basic data type such as <code>string</code>, <code>float</code>, and <code>Boolean</code>.
           Consider the following example where we have a variable named 
           <code>current_thought</code> which denotes what a programmer might be 
           thinking about throughout the day.
@@ -341,7 +341,7 @@
               // Early in the morning their first thought could potentially be
               current_thought = "coffee"
               
-              // Next they could be thinking, do I want office coffee?
+              // Next they could be thinking, do I want office 1coffee?
               current_thought = false
               
               // Note that we don't use double quotes when assigning a boolean value to a variable.
@@ -363,15 +363,15 @@
       </section>
 
       <section>
-        <h3>Structures</h3>
+        <h3><dfn>Structures</dfn></h3>
         <p>
-          The data types defined in the previous section are all atomic literals. 
+          The <a>Primitive Types</a> defined in the previous section are all <dfn>atomic</dfn> literals.
           DMS also allows programmers to build more complex structures such as lists, or dictionaries.
         </p>
         <section>
-          <h3>List</h3>
+          <h3><dfn>List</dfn></h3>
           <p>
-            A list can is an ordered arrangement of other structures. 
+            A <code>list</code> is an ordered arrangement of other <a>Structures</a>.
             All elements are enclosed within brackets, and separated by commas as follows.
           </p>
           <div>
@@ -395,10 +395,10 @@
         </section>
 
         <section>
-          <h3>Dictionary</h3>
+          <h3><dfn>Dictionary</dfn></h3>
           <p>
-            A dictionary is a structure that maps data in key-value pairs. 
-            The value of a corresponding key can be any structure.
+            A <code>dictionary</code> is a <a>Structure</a> that maps data in key-value pairs.
+            The value of a corresponding key can be any <a>Structure</a>.
           </p>
           <div>
             <pre class="example">
@@ -416,12 +416,12 @@
             </blockquote>
           </div>
           <p>
-            Take note on the syntax that was used to create the dictionary 
+            Take note on the syntax that was used to create the <code>dictionary</code>
             in the above code snippet. 
-            The keys of the dictionary are symbols which are a finite sequence 
+            The keys of the <code>dictionary</code> are symbols which are a finite sequence
             of characters without the double quotation marks, 
             and the values in this example are simply integer values. 
-            Note that when accessing the values of a dictionary, 
+            Note that when accessing the values of a <code>dictionary</code>,
             the keys must be enclosed within double quotation marks.
           </p>
           <div>
@@ -444,11 +444,11 @@
       </section>
 
       <section>
-        <h3>Functions</h3>
+        <h3><dfn>Functions</dfn></h3>
         <p>
           Custom function definitions in DMS start with the keyword <code>def</code> and have a set of parentheses after the function name. 
           The curly braces tell the compiler where the function body begins and ends. 
-          Consider the following function which simply returns the string, <code>"Greetings!"</code>.
+          Consider the following function which simply returns the <code>string</code>, <code>"Greetings!"</code>.
         </p>
         <pre class="example">
           def greet() {
@@ -459,8 +459,8 @@
           Our declaration of the greet function begins with the keyword <code>def</code>, 
           is followed by the function name <code>greet</code>, and ends with a set of empty parentheses <code>()</code>. 
           The function body contains all the logic that is expected to be executed when calling the function. 
-          In the above example, we simply return the string <code>"Greetings!"</code> using the keyword pop. 
-          In order to call our function and print the corresponding greeting, we use the keyword act. 
+          In the above example, we simply return the <code>string</code>, <code>"Greetings!"</code> using the keyword pop.
+          In order to call our function and print the corresponding greeting, we use the keyword <code>act</code>.
         </p>
         <div>
           <pre class="example">
@@ -499,13 +499,13 @@
         </div>
 
         <section>
-          <h3>Built-in Functions</h3>
+          <h3><dfn>Built-in Functions</dfn></h3>
           A handful of standard functions are available.
 
           <section>
-            <h3>Comparison operators</h3>
+            <h3><dfn>Comparison operators</dfn></h3>
             Check for equality with <code>==</code> or <code>!=</code>.
-            Compare numbers with <code>></code>, <code>>=</code>, <code><</code>, and <code><=</code>.
+            Compare <code>numbers</code> with <code>></code>, <code>>=</code>, <code><</code>, and <code><=</code>.
             <div>
               <pre class="example">
                 once {
@@ -524,8 +524,8 @@
           </section>
 
           <section>
-            <h3>Boolean operators</h3>
-            Typical Boolean functions such as <code>&&</code>, <code>||</code>, and <code>!</code> are supported.
+            <h3><dfn>Boolean operators</dfn> </h3>
+            Typical <code>Boolean</code> functions such as <code>&&</code>, <code>||</code>, and <code>!</code> are supported.
             <div>
               <pre class="example">
                 once {
@@ -542,8 +542,8 @@
           </section>
 
           <section>
-            <h3>Arithmetic operations</h3>
-            Frequently used mathematical functions over numbers are available, such as 
+            <h3><dfn>Arithmetic operations</dfn></h3>
+            Frequently used mathematical functions over <code>numbers</code> are available, such as
             <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, and <code>floor</code>.
             <div>
               <pre class="example">
@@ -561,8 +561,9 @@
           </section>
 
           <section>
-            <h3>Type casting operators</h3>
-            The <code>to_num</code> and <code>to_str</code> operators allow changing types between numbers and strings.
+            <h3><dfn>Type casting operators</dfn></h3>
+            The <code>to_num</code> and <code>to_str</code> operators allow changing types between <code>numbers</code>
+            and <code>string</code>s.
             <div>
               <pre class="example">
                 once {
@@ -582,10 +583,10 @@
           </section>
 
           <section>
-            <h3>++</h3>
+            <h3><dfn>++</dfn></h3>
             <p>
-              The <code>++</code> operator concatenates two lists. 
-              Note, on the other hand, the <code>+</code> operator combines strings.
+              The <code>++</code> operator concatenates two <a>lists</a>.
+              Note, on the other hand, the <code>+</code> operator combines <code>string</code>s.
             </p>
             <div>
               <pre class="example">
@@ -601,10 +602,10 @@
           </section>
 
           <section>
-            <h3>len</h3>
+            <h3><dfn>len</dfn></h3>
             <p>
               The <code>len</code> function returns the length of the given argument. 
-              Possible argument types include: string, list, or dictionary.
+              Possible argument types include: <code>string</code>, <a>list</a>, or <a>dictionary</a>.
             </p>
             <div>
               <pre class="example">
@@ -626,9 +627,9 @@
           </section>
           
           <section>
-            <h3>pick</h3>
+            <h3><dfn>pick</dfn></h3>
             <p>
-              The <code>pick</code> function allows programmers to pseudo-randomly select an item from a list.
+              The <code>pick</code> function allows programmers to pseudo-randomly select an item from a <a>list</a>.
             </p>
             <div>
               <pre class="example">
@@ -649,9 +650,9 @@
           </section>
           
           <section>
-            <h3>get</h3>
+            <h3><dfn>get</dfn></h3>
             <p>
-              The <code>get</code> function allows users to select a specific element of a list. 
+              The <code>get</code> function allows users to select a specific element of a <a>list</a>.
               In the above example if we wanted to retrieve the last element we could do so as follows.
             </p>
             <div>
@@ -670,9 +671,9 @@
           </section>
 
           <section>
-            <h3>range</h3>
+            <h3><dfn>range</dfn></h3>
             <p>
-              The <code>range</code> function generates a list from the starting value (inclusive) to the ending value (exclusive).
+              The <code>range</code> function generates a <a>list</a> from the starting value (inclusive) to the ending value (exclusive).
             </p>
             <div>
               <pre class="example">
@@ -701,9 +702,9 @@
           </section>
 
           <section>
-            <h3>map</h3>
+            <h3><dfn>map</dfn></h3>
             <p>
-              The <code>map</code> function iterates through a list passed in, and produces a new list with modified elements.
+              The <code>map</code> function iterates through a <a>list</a> passed in, and produces a new <a>list</a> with modified elements.
             </p>
             <div>
               <pre class="example">
@@ -717,7 +718,7 @@
               </blockquote>
             </div>
             <p>
-              Multiple lists may be passed in, as long as the operator passed in supports that number of arguments.
+              Multiple <a>lists</a> may be passed in, as long as the operator passed in supports that number of arguments.
             </p>
             <div>
               <pre class="example">
@@ -730,7 +731,7 @@
                 <pre></pre>
               </blockquote>
             </div>
-            <p>This opens up a lot of useful list manipulation techniques, such as implementing <code>zip</code> below.</p>
+            <p>This opens up a lot of useful <a>list</a> manipulation techniques, such as implementing <code>zip</code> below.</p>
             <div>
               <pre class="example">
                 once {
@@ -751,10 +752,10 @@
           </section>
 
           <section>
-            <h3>foldl</h3>
+            <h3><dfn>foldl</dfn></h3>
             <p>
-              The <code>foldl</code> function iterates through a list from the left to yield a value by 
-              applying a given operator to each element of the list with an accumulator.
+              The <code>foldl</code> function iterates through a <a>list</a> from the left to yield a value by
+              applying a given operator to each element of the <a>list</a> with an accumulator.
             </p>
             <div>
               <pre class="example">
@@ -775,7 +776,7 @@
           <section>
             <h3>sort, shuffle, reverse</h3>
             <p>
-              The <code>sort</code>, <code>shuffle</code>, and <code>reverse</code> functions operate on lists.
+              The <code>sort</code>, <code>shuffle</code>, and <code>reverse</code> functions operate on <a>lists</a>.
             </p>
             <div>
               <pre class="example">
@@ -794,9 +795,9 @@
           </section>
 
           <section>
-            <h3>in</h3>
+            <h3><dfn>in</dfn></h3>
             <p>
-              The <code>in</code> function is an in-fix operator that checks if an element exists within a structure.
+              The <code>in</code> function is an in-fix operator that checks if an element exists within a <a>Structure</a>.
             </p>
             <div>
               <pre class="example">
@@ -817,23 +818,13 @@
           </section>
 
           <section>
-            <h3>patch</h3>
-            <div>
-              <pre class="example">
-                once {
-                  info = {name: "unknown", inventory: {belt: 1, jacket: 2}}
-                  act patch(info, {name: "Bob", inventory: {jacket: 3}})
-                }
-              </pre>
-              <blockquote>
-                <button onclick="return runClicked(this);">Run</button>
-                <pre></pre>
-              </blockquote>
-            </div>
-          </section>
-
-          <section>
-            <h3>edit</h3>
+            <h3><dfn>edit</dfn></h3>
+            <p>
+              the <code>edit</code> function performs a mutation on a <a>dictionary</a> variable based on the specified
+              key value pair. The general syntax is as follows: <code>edit(dictionary, value, key)</code>. Note that
+              if the specified key does not exist, an entry will be create within the specified <a>dictionary</a> variable
+              with the specified value.
+            </p>
             <div>
               <pre class="example">
                 once {
@@ -849,7 +840,32 @@
           </section>
 
           <section>
-            <h3>from_list</h3>
+            <h3><dfn>patch</dfn></h3>
+            <p>
+              The <code>patch</code> function mutates a
+              <a>dictionary</a> variable based on instructions encoded by another dictionary.
+              The general syntax is as follows: <code>patch(dictionary, key_values)</code>.
+              Note that like <a>edit</a> if <code>patch</code> encounters a key that does not exist within the specified
+              <a>dictionary</a> variable, <code>patch</code> with create an entry with the missing key and
+              corresponding value.
+
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  info = {name: "unknown", inventory: {belt: 1, jacket: 2}}
+                  act patch(info, {name: "Bob", inventory: {jacket: 3}})
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3><dfn>from_list</dfn></h3>
             <p>
               The <code>from_list</code> function converts a list of pairs (2-element lists) into a dictionary.
             </p>
@@ -872,7 +888,7 @@
           </section>
           
           <section>
-            <h3>exists</h3>
+            <h3><dfn>exists</dfn></h3>
             <p>
               The <code>exists</code> function allows programmers to check whether the given variable has been defined or not.
             </p>
@@ -902,7 +918,7 @@
       </section>
 
       <section>
-        <h3>Input Handling</h3>
+        <h3><dfn>Input</dfn> Handling</h3>
         <p>
           Up to now all program behavior has been predefined. 
           Variables have been assigned persistent values, and all output can be predetermined ahead of time. 
@@ -1005,7 +1021,7 @@
             Next in order to bring all predefined functions into scope within 
             <code>main.dms</code> we use the keyword <code>import _</code>. 
             This can essentially be thought of as bringing everything that was 
-            defined within <code>main.dms</code> into scope and actually usable. 
+            defined within <code>main.dms</code> into scope and made usable.
             The manner in which components are introduced might be a little tough to understand. 
             
             At a high level the use of components can be thought of as follows. 
@@ -1020,11 +1036,12 @@
           <p>
             In the last section we introduced the idea of a component or simply a script. 
             Components not only make a programmers life easier by allowing DMS code to be modular, 
-            but also save developers from writing their entire code base within a component. 
+            but also save developers from writing their entire code base within a single component.
             DMS allows programmers to launch sub-components from within a main-component. 
             At a high level this means that if our current task is to make dinner, 
             completing the sub-task of washing dishes gives us the clean dishes we need to finish our main task. 
-            Consider the following DMS code which does exactly that.
+            Consider the following DMS code which does exactly that. Create the following two files: <code>main.dms</code>
+            and <code>wash_dishes.dms</code>. Inside <code>wash_dishes.dms</code> place the following code segment.
           </p>
           <div>
             <pre class="example">
@@ -1045,7 +1062,7 @@
             </blockquote>
           </div>
           <p>
-            Similarly within main.dms place the following. 
+            Similarly within <code>main.dms</code> place the following.
           </p>
           <pre class="example">
             once {
@@ -1066,20 +1083,20 @@
           <p>
               There’s a lot going on in the above example, 
               so lets break it down. In order to launch a sub-component we use the keyword <code>run</code>. 
-              The line containing run <code>"wash_dishes" () -> result</code> 
+              The line containing <code>run "wash_dishes" () -> result</code>
               tells DMS that we want to pause our current component, 
               run the sub-component, and wait for it to finish. 
-              Upon finishing, the wash_dishes sub-component returns a Boolean value denoting its success, 
+              Upon finishing, the <code>wash_dishes</code> sub-component returns a <a>Boolean</a> value denoting its success,
               which is stored in result. 
-              (Note that the returned value of the sub-component does not have to be a Boolean value, 
-              and can actually be any of the atomic or structure data types defined in the previous chapter.)  
+              (Note that the returned value of the sub-component does not have to be a <a>Boolean</a> value,
+              and can actually be any of the <a>atomic</a> or <a>structure</a> data types defined in the previous chapter.)
           </p>
           <p>
-              The expressions that follow are again an example of conditional if-else expressions. 
+              The expressions that follow are again an example of conditional <code>if-else</code> expressions.
               The first expression that evaluates to true will be executed, and the others will be ignored. 
-              In this case because we happen to be returning a Boolean value, whenever the result is true, 
+            In this case because we happen to be returning a <a>Boolean</a> value, whenever the result is <code>true</code>,
               the first expression will be executed, and our program defaults to the case 
-              beginning with an underscore <code>_</code> as this evaluates to true. 
+              beginning with an underscore <code>_</code> as this evaluates to <code>true</code>.
               
               
           </p>
