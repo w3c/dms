@@ -38,6 +38,16 @@
         isPreview: false,
         link: {
           "check-punctuation": true
+        },
+        localBiblio: {	
+          "dms-compiler": {	
+            "authors": [	
+              "Nishant Shukla",	
+              "James Long"	
+            ],	
+            "href": "https://github.com/conversational-interfaces/dms-compiler",	
+            "title": "Dialogue Manager Script Compiler"
+          }	
         }
       };
     </script>
@@ -64,6 +74,7 @@
       <p>
         The code snippets presented in this page can be evaluated by hitting the "Run" button,
         which compiles DM Script into [[DMPL]] JSON, and then processes that JSON on a JavaScript runtime.
+        The compiler can be found on GitHub [[dms-compiler]].
       </p>
     </section>
 
@@ -126,6 +137,11 @@
           <button style="display: none;" onclick="return handleIntent(this);">Send</button>
         </blockquote>
       </div>
+
+      Once the user guesses the correct number, the system will output "You win!",
+      and finallly the script will end, as indicated by <code>pop true</code>, which 
+      pops the current script from the runtime stack. 
+
     </section>
 
     <section>
@@ -471,6 +487,8 @@
           Unfortunately, the program chooses the suboptimal sequence of actions: 
           it chooses to do nothing after eating up all the available food.
           Let's increase its intelligence by changing the fork-strategy to <code>{depth: 3}</code>.
+          Notice that now, the program will alternate between eating food and working,
+          which is the optimal strategy.
         </p>
         <div>
           <pre class="example">
@@ -646,8 +664,8 @@
           Our declaration of the <code>greet</code> function begins with the keyword <code>def</code>, 
           is followed by the function name <code>greet</code>, and ends with a set of empty parentheses <code>()</code>. 
           The function body contains all the logic that is expected to be executed when calling the function. 
-          In the above example, we simply return the <code>string</code> <code>"Greetings!"</code> using the keyword <a>pop</a>. 
-          In order to call our function and print the corresponding greeting, we use the keyword <code>act</code>. 
+          In the above example, we simply return the <a>string</a> <code>"Greetings!"</code> using the keyword <a>pop</a>. 
+          In order to call our function and print the corresponding greeting, we use the keyword <dfn><code>act</code></dfn>. 
         </p>
         <div>
           <pre class="example">
@@ -678,6 +696,34 @@
               }
             }
             act greet(programmer)
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+        <p>
+          The variables introduced in a function are local variables that are
+          only accessible within the current scope, and they shadow the variables
+          defined in the outer scope. 
+          In the example below, we define a variable called <code>greetings</code>
+          within a function, and later try to access that variable out of scope.
+          Undefined variables by default evaluate to <dfn><code>null</code></dfn>.
+        </p>
+
+        <div>
+          <pre class="example">
+            once {
+              programmer = "Naitian"
+              def greet(user) {
+                greetings = pick(["Greetings", "Howdy", "Sup"])
+                pop greetings + " " + user
+              }
+              act greet(programmer)
+              act programmer
+              act greetings
+            }
+            
           </pre>
           <blockquote>
             <button onclick="return runClicked(this);">Run</button>
@@ -961,7 +1007,7 @@
           </section>
 
           <section>
-            <h3>sort, shuffle, reverse</h3>
+            <h3><dfn>sort</dfn>, <dfn>shuffle</dfn>, <dfn>reverse</dfn></h3>
             <p>
               The <code>sort</code>, <code>shuffle</code>, and <code>reverse</code> functions operate on <a>lists</a>.
             </p>
