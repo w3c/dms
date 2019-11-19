@@ -88,7 +88,7 @@
         <blockquote>
           <button onclick="return runClicked(this);">Run</button>
           <pre></pre>
-          <input style="display: none;" placeholder="type input here" />
+          <input style="display: none;" type="number" placeholder="type input here" />
           <button style="display: none;" onclick="return handleIntent(this);">Send</button>
         </blockquote>
       </div>
@@ -122,7 +122,7 @@
         <blockquote>
           <button onclick="return runClicked(this);">Run</button>
           <pre></pre>
-          <input style="display: none;" placeholder="type input here" />
+          <input style="display: none;" type="number" placeholder="type input here" />
           <button style="display: none;" onclick="return handleIntent(this);">Send</button>
         </blockquote>
       </div>
@@ -1128,7 +1128,7 @@
                 act "Ahoj to you!"
               }
               _ {
-                act result
+                act "You said: " + result
               }
             }
           </pre>
