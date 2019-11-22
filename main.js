@@ -1,4 +1,3 @@
-
 let worker = null;
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -8,7 +7,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 let deleteWorker = function() {
     worker.terminate();
     worker = null;
-}
+};
+
+let keyupListener = function(event) {
+    if(event.key === "Enter") {
+        event.preventDefault();
+        keyupListener.sendBtn.click();
+    }
+};
 
 let runClicked = function(context, debug_mode, max_lines) {
     if (debug_mode === undefined) {
@@ -25,12 +31,8 @@ let runClicked = function(context, debug_mode, max_lines) {
     if (context.parentNode.children.length > 3) {
         intentInput = context.parentNode.children[2];
         let sendBtn = context.parentNode.children[3];
-        intentInput.addEventListener("keyup", function(event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                sendBtn.click();
-            }
-        });
+        keyupListener.sendBtn = sendBtn;
+        intentInput.addEventListener("keyup", keyupListener, false);
         intentInput.style.display = "";
         sendBtn.style.display = "";
         sendBtn.onclick = function() {
