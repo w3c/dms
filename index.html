@@ -973,7 +973,7 @@
                     def pair(x, y) {
                       pop [x, y]
                     }
-                    pop map(zip, xs, ys)
+                    pop map(pair, xs, ys)
                   }
                   act zip([1, 2, 3], ["a", "b", "c"])
                 }
