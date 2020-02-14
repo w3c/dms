@@ -732,6 +732,33 @@
           </blockquote>
         </div>
 
+        <p>
+          You can also implement <dfn>closure</dfn> using <a>functions</a>. For example, in the following code-snippet we show how
+          to define a function that raises a number to an exponent.
+        </p>
+        <div>
+          <pre class="example">
+            once {
+              def powerOf(power) {
+                  def f(num) {
+                      pop pow(num, power)
+                  }
+                  pop f
+              }
+
+              square = powerOf(2)
+              cube = powerOf(3)
+
+              act square(3)
+              act cube(3)
+          }
+          </pre>
+          <blockquote>
+            <button onclick="return runClicked(this);">Run</button>
+            <pre></pre>
+          </blockquote>
+        </div>
+
         <section>
           <h3><dfn>Built-in Functions</dfn></h3>
           A handful of functions are available out of the box in DMS, forming a standard library. 
@@ -1335,9 +1362,58 @@
               
               
           </p>
+
+        </section>
+
+        <section>
+          <h3><dfn>_args</dfn> builtin</h3>
+          <p>
+            In the <a>run</a> example we showed how to launch a sub-component by calling, <code>run "wash_dishes" () -> result</code>
+            from within the main component. Note the empty parentheses, <code>()</code>, following the name of our sub-component. In DMS
+            we can pass arguments to our sub-component by placing placing all intended parameters (i.e. arguments) within <code>()</code>.
+            The sub-component can then access these arguments by unpacking or indexing the builtin <a>_args</a> variable.
+            In the following example we show how to pass arguments to our sub-component and access their values using both
+            array indexing and unpacking notation.
+          </p>
+          <p>
+            Create two files: <code>jury.dms</code> and <code>decision.dms</code>. Within <code>jury.dms</code> place the
+            following code snippet.
+          </p>
+          <pre class="example">
+          once {
+              first = "Nishant"
+              last = "Shukla"
+
+              run "decision" (first, last) -> verdict {
+                  verdict {
+                      act "Jail forever."
+                  }
+                  _ {
+                      act "Freedom!"
+                  }
+              }
+          }
+          </pre>
+          <p>
+            Similarly, within <code>decision.dms</code> place the following code snippet. Here we show how to unpack the
+            <a>_args</a> builtin variable using both aforementioned notations.
+          </p>
+          <pre class="example">
+          // unpack the array
+          first, last = _args
+	    
+          // or, access the array by index
+          first = _args[0]
+          last = _args[1]
+	  
+          pop first == "Nishant" && last == "Shukla"
+          </pre>
+          <p>
+            <b>Note</b>: The <a>_args</a> builtin variable is <a>null</a> in any component that is not called by another
+            component, such as a <code>main</code> component, and is otherwise an empty <a>list</a>.
+          </p>
         </section>
       </section>
-      
     </section>
 
     <section>
