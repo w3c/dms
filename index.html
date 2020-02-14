@@ -733,24 +733,21 @@
         </div>
 
         <p>
-          In the examples above, our defined <a>functions</a> serve a single purpose: they either return some
-          hard-coded value, or compute a value using their given parameters. However, defining custom <a>functions</a>
-          gives <dfn>closure</dfn> support. Having <a>closure</a> support allows us define higher <dfn>higher-order functions</dfn>
-          enabling us to create customizable functions. In the following example we show how
-          to define a customizable function that raises a <code>base</code> <a>integer</a> to an <code>exponent</code>.
+          You can also implement <dfn>closure</dfn> using <a>functions</a>. For example, in the following code-snippet we show how
+          to define a function that raises a number to an exponent.
         </p>
         <div>
           <pre class="example">
             once {
-              def custom(power) {
-                  def base(num) {
+              def powerOf(power) {
+                  def f(num) {
                       pop pow(num, power)
                   }
-                  pop base
+                  pop f
               }
 
-              square = custom(2)
-              cube = custom(3)
+              square = powerOf(2)
+              cube = powerOf(3)
 
               act square(3)
               act cube(3)
@@ -1373,7 +1370,7 @@
           <p>
             In the <a>run</a> example we showed how to launch a sub-component by calling, <code>run "wash_dishes" () -> result</code>
             from within the main component. Note the empty parentheses, <code>()</code>, following the name of our sub-component. In DMS
-            we can pass arguments to our sub-component by placing placing all intended parameters within <code>()</code>.
+            we can pass arguments to our sub-component by placing placing all intended parameters (i.e. arguments) within <code>()</code>.
             The sub-component can then access these arguments by unpacking or indexing the builtin <a>_args</a> variable.
             In the following example we show how to pass arguments to our sub-component and access their values using both
             array indexing and unpacking notation.
@@ -1383,7 +1380,7 @@
             following code snippet.
           </p>
           <pre class="example">
-            once {
+          once {
               first = "Nishant"
               last = "Shukla"
 
@@ -1402,12 +1399,14 @@
             <a>_args</a> builtin variable using both aforementioned notations.
           </p>
           <pre class="example">
-            first, last = _args
-            //The following variables are created for demonstration purposes but are not used.
-            first_name = _args[0]
-            last_name = _args[1]
-
-            pop first == "Nishant" && last == "Shukla"
+          // unpack the array
+          first, last = _args
+	    
+          // or, access the array by index
+          first = _args[0]
+          last = _args[1]
+	  
+          pop first == "Nishant" && last == "Shukla"
           </pre>
           <p>
             <b>Note</b>: The <a>_args</a> builtin variable is <a>null</a> in any component that is not called by another
