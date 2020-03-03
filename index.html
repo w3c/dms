@@ -1233,17 +1233,16 @@
               </blockquote>
             </div>
             <p>
-              The above example can be hard to understand at first sight so lets break it down. At a high-level the
+                The above example can be hard to understand at first sight so lets break it down. At a high-level the
               component itself is the root of our tree structure. From there, code blocks and statements having equal scope
-              can be though of as the roots children. In the above example, the <a>act</a> statement and the code block
-              following the <code>input -> result</code> statement have equal scope and hence are children of the root. Stepping
-              into the code block following <code>input -> result</code>, the code blocks following <code>result == "jupiter"</code>
+              can be thought of as children of the root. In the above example, the <a>act</a> statement and the code block
+              following the <code>input</code> statement have equal scope and hence are children of the root. Stepping
+              into the code block following the <code>input</code> statement, the code blocks following <code>result == "jupiter"</code>
               and <code>_</code> have equal scope; as such they are both children
-              of the <code>input -> result</code> statement. Finally looking at the code block following <code>_</code>, both <a>act</a>
+              of the <code>input</code> statement. Finally looking at the code block following <code>_</code>, both <a>act</a>
               statements and the <a>hop</a> statement have equal scope, and hence are all children of the <code>_</code>
-              statement. From there <a>hop</a> followed by an integer specifies the number of ancestors to go back to. In
-              the above example <code>hop 3</code> returns to the root of our tree structure and hence everything is
-              executed again.
+              statement. With this in mind the <a>hop</a> statement is essentially saying, return to the third ancestor of
+              this code block.
             </p>
           </section>
 
@@ -1442,7 +1441,7 @@
           <p>
             In the <a>run</a> example we showed how to launch a sub-component by calling, <code>run "wash_dishes" () -> result</code>
             from within the main component. Note the empty parentheses, <code>()</code>, following the name of our sub-component. In DMS
-            we can pass arguments to our sub-component by placing placing all intended parameters (i.e. arguments) within <code>()</code>.
+            we can pass arguments to our sub-component by placing all intended parameters (i.e. arguments) within <code>()</code>.
             The sub-component can then access these arguments by unpacking or indexing the builtin <a>_args</a> variable.
             In the following example we show how to pass arguments to our sub-component and access their values using both
             array indexing and unpacking notation.
