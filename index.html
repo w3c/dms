@@ -759,6 +759,11 @@
           </blockquote>
         </div>
 
+        <p>
+          In DMS we enforce <dfn>pure function</dfn>s. As such, statements with side effects i.e. <a>act</a> or <a>input</a>
+          statements, are not recommended within the body of any user defined function.
+        </p>
+
         <section>
           <h3><dfn>Built-in Functions</dfn></h3>
           A handful of functions are available out of the box in DMS, forming a standard library. 
@@ -1175,7 +1180,74 @@
               our program defaults to the <code>else</code> branch of the conditional statement.
             </p>
           </section>
-          
+
+          <section>
+            <h3><dfn>pow</dfn></h3>
+            <p>
+              The <code>pow</code> function raises a <code>base</code> number to a specified <code>exponent</code>.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  base = 2
+                  exponent = 3
+                  act pow(base, exponent)
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3><dfn>hop</dfn></h3>
+            <p>
+              Recall that DMS compiles down to [[DMPL]] compliant [[JSON]]. Taking the tree-like structure of [[DMPL]]
+              into consideration the <a>hop</a> statement allows programmers to revisit the ancestors of the current
+              code block. Consider the following example, keeping in mind the notion of code blocks having ancestors.
+            </p>
+            <div>
+              <pre class="example">
+                act "What's the largest planet?"  // <-- hop 3, comes back to here
+
+                input -> result { // <-- hop 2, go to grandparent
+                  result == "jupiter" {
+                    act "Correct!"
+                  }
+                  _ { // <-- hop 1, go to parent
+                    act "Nope"
+                    act "Try again..."
+                    hop 3
+                  }
+                }
+
+                pop true
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+                <input style="display: none;" placeholder="type input here" />
+                <button style="display: none;" onclick="return handleIntent(this);">Send</button>
+              </blockquote>
+            </div>
+            <p>
+              The above example can be hard to understand at first sight so lets break it down. At a high-level the
+              component itself is the root of our tree structure. From there, code blocks and statements having equal scope
+              can be though of as the roots children. In the above example, the <a>act</a> statement and the code block
+              following the <code>input -> result</code> statement have equal scope and hence are children of the root. Stepping
+              into the code block following <code>input -> result</code>, the code blocks following <code>result == "jupiter"</code>
+              and <code>_</code> have equal scope; as such they are both children
+              of the <code>input -> result</code> statement. Finally looking at the code block following <code>_</code>, both <a>act</a>
+              statements and the <a>hop</a> statement have equal scope, and hence are all children of the <code>_</code>
+              statement. From there <a>hop</a> followed by an integer specifies the number of ancestors to go back to. In
+              the above example <code>hop 3</code> returns to the root of our tree structure and hence everything is
+              executed again.
+            </p>
+          </section>
+
+
         </section>
       </section>
 
