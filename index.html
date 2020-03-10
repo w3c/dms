@@ -760,8 +760,8 @@
         </div>
 
         <p>
-          In DMS we enforce <dfn>pure function</dfn>s. As such, statements with side effects i.e. <a>act</a> or <a>input</a>
-          statements, are not recommended within the body of any user defined function.
+          In DMS, functions are pure, so <a>act</a> or <a>input</a>
+          statements are not recommended in the body of user defined functions.
         </p>
 
         <section>
@@ -1204,8 +1204,8 @@
           <section>
             <h3><dfn>hop</dfn></h3>
             <p>
-              Recall that DMS compiles down to [[DMPL]] compliant [[JSON]]. Taking the tree-like structure of [[DMPL]]
-              into consideration the <a>hop</a> statement allows programmers to revisit the ancestors of the current
+              Recall that DMS compiles down to [[DMPL]] compliant [[JSON]], which is a tree-like structure. 
+              The <a>hop</a> statement allows programmers to revisit the ancestors of the current
               code block. Consider the following example, keeping in mind the notion of code blocks having ancestors.
             </p>
             <div>
