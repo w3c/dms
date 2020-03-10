@@ -759,6 +759,11 @@
           </blockquote>
         </div>
 
+        <p>
+          In DMS, functions are pure, so <a>act</a> or <a>input</a>
+          statements are not recommended in the body of user defined functions.
+        </p>
+
         <section>
           <h3><dfn>Built-in Functions</dfn></h3>
           A handful of functions are available out of the box in DMS, forming a standard library. 
@@ -1175,7 +1180,73 @@
               our program defaults to the <code>else</code> branch of the conditional statement.
             </p>
           </section>
-          
+
+          <section>
+            <h3><dfn>pow</dfn></h3>
+            <p>
+              The <code>pow</code> function raises a <code>base</code> number to a specified <code>exponent</code>.
+            </p>
+            <div>
+              <pre class="example">
+                once {
+                  base = 2
+                  exponent = 3
+                  act pow(base, exponent)
+                }
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+              </blockquote>
+            </div>
+          </section>
+
+          <section>
+            <h3><dfn>hop</dfn></h3>
+            <p>
+              Recall that DMS compiles down to [[DMPL]] compliant [[JSON]], which is a tree-like structure. 
+              The <a>hop</a> statement allows programmers to revisit the ancestors of the current
+              code block. Consider the following example, keeping in mind the notion of code blocks having ancestors.
+            </p>
+            <div>
+              <pre class="example">
+                act "What's the largest planet?"  // <-- hop 3, comes back to here
+
+                input -> result { // <-- hop 2, go to grandparent
+                  result == "jupiter" {
+                    act "Correct!"
+                  }
+                  _ { // <-- hop 1, go to parent
+                    act "Nope"
+                    act "Try again..."
+                    hop 3
+                  }
+                }
+
+                pop true
+              </pre>
+              <blockquote>
+                <button onclick="return runClicked(this);">Run</button>
+                <pre></pre>
+                <input style="display: none;" placeholder="type input here" />
+                <button style="display: none;" onclick="return handleIntent(this);">Send</button>
+              </blockquote>
+            </div>
+            <p>
+                The above example can be hard to understand at first sight so lets break it down. At a high-level the
+              component itself is the root of our tree structure. From there, code blocks and statements having equal scope
+              can be thought of as children of the root. In the above example, the <a>act</a> statement and the code block
+              following the <code>input</code> statement have equal scope and hence are children of the root. Stepping
+              into the code block following the <code>input</code> statement, the code blocks following <code>result == "jupiter"</code>
+              and <code>_</code> have equal scope; as such they are both children
+              of the <code>input</code> statement. Finally looking at the code block following <code>_</code>, both <a>act</a>
+              statements and the <a>hop</a> statement have equal scope, and hence are all children of the <code>_</code>
+              statement. With this in mind the <a>hop</a> statement is essentially saying, return to the third ancestor of
+              this code block.
+            </p>
+          </section>
+
+
         </section>
       </section>
 
@@ -1370,7 +1441,7 @@
           <p>
             In the <a>run</a> example we showed how to launch a sub-component by calling, <code>run "wash_dishes" () -> result</code>
             from within the main component. Note the empty parentheses, <code>()</code>, following the name of our sub-component. In DMS
-            we can pass arguments to our sub-component by placing placing all intended parameters (i.e. arguments) within <code>()</code>.
+            we can pass arguments to our sub-component by placing all intended parameters (i.e. arguments) within <code>()</code>.
             The sub-component can then access these arguments by unpacking or indexing the builtin <a>_args</a> variable.
             In the following example we show how to pass arguments to our sub-component and access their values using both
             array indexing and unpacking notation.
