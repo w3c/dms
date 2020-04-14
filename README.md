@@ -1,5 +1,5 @@
 # Dialogue Manager Script (DMS)
-* W3C Report: https://www.w3.org/2019/11/dms
+* Final W3C Report: https://www.w3.org/2020/04/dms/
 * Latest editor's draft: https://w3c.github.io/dms
 * Try it online: https://conversational-interfaces.github.io/dms-scratchpad/
 
